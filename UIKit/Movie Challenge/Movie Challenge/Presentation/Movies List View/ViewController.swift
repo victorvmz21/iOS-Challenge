@@ -10,7 +10,7 @@ class ViewController: UIViewController {
     Network.shared.apollo.fetch(query: query) { result in
       switch result {
         case .success(let graphQLResult):
-          print("Found \(graphQLResult.data?.movies?.count ?? 0) movies")
+          print("Found \(graphQLResult.data?.movies?.first??.title ?? "") movies")
 
         case .failure(let error):
           print("Error getting movies: \(error.localizedDescription)")

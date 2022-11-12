@@ -1,5 +1,16 @@
 query GetMoviesQuery {
-  movies {
+ movies {
     title
+    genres
+    voteAverage
+    posterPath
+    overview
+    cast {
+      name
+      profilePath
+    }
+    director {
+      name
+    }
   }
 }

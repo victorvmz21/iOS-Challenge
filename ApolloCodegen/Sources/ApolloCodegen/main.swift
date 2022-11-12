@@ -37,25 +37,16 @@ struct SwiftScript: ParsableCommand {
         .apollo.childFolderURL(folderName: appName)
         .apollo.childFolderURL(folderName: appName)
         .apollo.childFolderURL(folderName: "Apollo")
-      let folderForDownloadedSchemaSwiftUI = fileStructure.sourceRootURL
-        .apollo.childFolderURL(folderName: "SwiftUI")
-        .apollo.childFolderURL(folderName: appName)
-        .apollo.childFolderURL(folderName: appName)
-        .apollo.childFolderURL(folderName: "Apollo")
 
       // Make sure the folder is created before trying to download something to it.
       try FileManager.default.apollo.createFolderIfNeeded(at: folderForDownloadedSchemaUIKit)
-      try FileManager.default.apollo.createFolderIfNeeded(at: folderForDownloadedSchemaSwiftUI)
 
       // Create a configuration object for downloading the schema. Provided code will download the schema via an introspection query to the provided URL as SDL (GraphQL Schema Definition Language) to a file called "schema.graphqls". For all configuration parameters check out https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloSchemaDownloadConfiguration/
       let schemaDownloadOptionsUIKit = ApolloSchemaDownloadConfiguration(using: .introspection(endpointURL: endpoint),
                                                                          outputFolderURL: folderForDownloadedSchemaUIKit)
-      let schemaDownloadOptionsSwiftUI = ApolloSchemaDownloadConfiguration(using: .introspection(endpointURL: endpoint),
-                                                                           outputFolderURL: folderForDownloadedSchemaSwiftUI)
 
       // Actually attempt to download the schema.
       try ApolloSchemaDownloader.fetch(with: schemaDownloadOptionsUIKit)
-      try ApolloSchemaDownloader.fetch(with: schemaDownloadOptionsSwiftUI)
     }
   }
 
@@ -78,37 +69,22 @@ struct SwiftScript: ParsableCommand {
         .apollo.childFolderURL(folderName: appName)
         .apollo.childFolderURL(folderName: appName)
 
-      let targetRootURLSwiftUI = fileStructure.sourceRootURL
-        .apollo.childFolderURL(folderName: "SwiftUI")
-        .apollo.childFolderURL(folderName: appName)
-        .apollo.childFolderURL(folderName: appName)
-
       let generatedUIKit = targetRootURLUIKit.apollo.childFolderURL(folderName: "Generated")
-      let generatedSwiftUI = targetRootURLSwiftUI.apollo.childFolderURL(folderName: "Generated")
 
       // Make sure the folder exists before trying to generate code.
       try FileManager.default.apollo.createFolderIfNeeded(at: generatedUIKit)
-      try FileManager.default.apollo.createFolderIfNeeded(at: generatedSwiftUI)
 
       // Create the Codegen options object. This default setup assumes `schema.graphqls` is in the target root folder, all queries are in some kind of subfolder of the target folder and will output as a single file to `API.swift` in the target folder. For alternate setup options, check out https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloCodegenOptions/
       let schemaURLUIKit = try targetRootURLUIKit
         .apollo.childFolderURL(folderName: "Apollo")
         .apollo.childFileURL(fileName: "schema.graphqls")
-      let schemaURLSwiftUI = try targetRootURLSwiftUI
-        .apollo.childFolderURL(folderName: "Apollo")
-        .apollo.childFileURL(fileName: "schema.graphqls")
       let codegenOptionsUIKit = ApolloCodegenOptions(outputFormat: .multipleFiles(inFolderAtURL: generatedUIKit),
                                                      urlToSchemaFile: schemaURLUIKit)
-      let codegenOptionsSwiftUI = ApolloCodegenOptions(outputFormat: .multipleFiles(inFolderAtURL: generatedSwiftUI),
-                                                       urlToSchemaFile: schemaURLSwiftUI)
 
       // Actually attempt to generate code.
       try ApolloCodegen.run(from: targetRootURLUIKit,
                             with: fileStructure.cliFolderURL,
                             options: codegenOptionsUIKit)
-      try ApolloCodegen.run(from: targetRootURLSwiftUI,
-                            with: fileStructure.cliFolderURL,
-                            options: codegenOptionsSwiftUI)
     }
   }
 
