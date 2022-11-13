@@ -12,8 +12,14 @@ protocol MoviesUseCaseProtocol {
 }
 
 class MoviesUseCase: MoviesUseCaseProtocol {
-    @
+
+    let repository: MoviesRepositoryProtocol
+    
+    init(repository: MoviesRepositoryProtocol) {
+        self.repository = repository
+    }
+    
     func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data, Error>) -> Void) {
-        <#code#>
+        repository.fetchMovies(completion: completion)
     }
 }

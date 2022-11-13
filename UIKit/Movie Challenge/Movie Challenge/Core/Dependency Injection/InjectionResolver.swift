@@ -12,7 +12,9 @@ class InjectionResolver {
     static let shared: InjectionResolver = InjectionResolver()
     
     //MARK: - Factories
+    lazy var viewControllerFactory: ViewControllerFactoryProtocol = ViewControllerFactory()
     lazy var viewModelFactory: ViewModelFactoryProtocol = ViewModelFactory()
     lazy var repositoryFactory: RepositoryFactoryProtocol = RepositoryFactory()
+    lazy var useCaseFactory: UseCaseFactoryProtocol = UseCaseFactory()
     
 }

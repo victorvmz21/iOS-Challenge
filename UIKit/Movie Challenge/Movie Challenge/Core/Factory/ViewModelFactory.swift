@@ -12,7 +12,10 @@ protocol ViewModelFactoryProtocol {
 }
 
 class ViewModelFactory: ViewModelFactoryProtocol {
+    
+    @Injected(\.useCaseFactory) var useCaseFactory
+    
     func createMoviesListViewModel() -> MoviesListViewModel {
-        return MoviesListViewModel()
+        return MoviesListViewModel(movieUseCase: useCaseFactory.createMovieUseCase())
     }
 }

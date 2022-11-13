@@ -2,15 +2,14 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    @Injected(\.viewModelFactory) var viewModelFactory
+    @Injected(\.viewControllerFactory) var viewControllerFactory
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window =  UIWindow(windowScene: scene)
-        
-        let MoviesListVc = MovieListViewController(viewModel: viewModelFactory.createMoviesListViewModel())
-        let navigationController = UINavigationController(rootViewController: MoviesListVc)
+    
+        let navigationController = UINavigationController(rootViewController: viewControllerFactory.createMovieListViewController())
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

@@ -27,6 +27,8 @@
 		5213C6F22920A0F2006F119F /* MoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6F12920A0F2006F119F /* MoviesRepository.swift */; };
 		5213C6F52920A5A6006F119F /* MoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6F42920A5A6006F119F /* MoviesUseCase.swift */; };
 		5213C6F72920A672006F119F /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6F62920A672006F119F /* RepositoryFactory.swift */; };
+		5213C6F92920A75B006F119F /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6F82920A75B006F119F /* ViewControllerFactory.swift */; };
+		5213C6FB2920CCF5006F119F /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6FA2920CCF5006F119F /* UseCaseFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		5213C6F12920A0F2006F119F /* MoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRepository.swift; sourceTree = "<group>"; };
 		5213C6F42920A5A6006F119F /* MoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesUseCase.swift; sourceTree = "<group>"; };
 		5213C6F62920A672006F119F /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
+		5213C6F82920A75B006F119F /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		5213C6FA2920CCF5006F119F /* UseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +219,8 @@
 			children = (
 				5213C6EF29209D09006F119F /* ViewModelFactory.swift */,
 				5213C6F62920A672006F119F /* RepositoryFactory.swift */,
+				5213C6F82920A75B006F119F /* ViewControllerFactory.swift */,
+				5213C6FA2920CCF5006F119F /* UseCaseFactory.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -330,6 +336,7 @@
 				5213C6F22920A0F2006F119F /* MoviesRepository.swift in Sources */,
 				3289DFEF275AF2170058C710 /* AppDelegate.swift in Sources */,
 				3289DFF1275AF2170058C710 /* SceneDelegate.swift in Sources */,
+				5213C6FB2920CCF5006F119F /* UseCaseFactory.swift in Sources */,
 				5213C6DC29209660006F119F /* MovieListViewController.swift in Sources */,
 				5213C6E829209C8A006F119F /* MoviesListViewModel.swift in Sources */,
 				3289E00A275AF3430058C710 /* Network.swift in Sources */,
@@ -340,6 +347,7 @@
 				3284FFD6275B0CEA0039F3EB /* Movies.graphql.swift in Sources */,
 				5213C6F029209D09006F119F /* ViewModelFactory.swift in Sources */,
 				5213C6E4292099B9006F119F /* UIViewExtension.swift in Sources */,
+				5213C6F92920A75B006F119F /* ViewControllerFactory.swift in Sources */,
 				5213C6F52920A5A6006F119F /* MoviesUseCase.swift in Sources */,
 				5213C6DE2920974F006F119F /* MovieListView.swift in Sources */,
 			);
