@@ -17,6 +17,13 @@
 		3289E006275AF2BA0058C710 /* ApolloSQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 3289E005275AF2BA0058C710 /* ApolloSQLite */; };
 		3289E00A275AF3430058C710 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3289E009275AF3430058C710 /* Network.swift */; };
 		5213C6DC29209660006F119F /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6DB29209660006F119F /* MovieListViewController.swift */; };
+		5213C6DE2920974F006F119F /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6DD2920974F006F119F /* MovieListView.swift */; };
+		5213C6E2292097CD006F119F /* UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6E1292097CD006F119F /* UIHelpers.swift */; };
+		5213C6E4292099B9006F119F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6E3292099B9006F119F /* UIViewExtension.swift */; };
+		5213C6E829209C8A006F119F /* MoviesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6E729209C8A006F119F /* MoviesListViewModel.swift */; };
+		5213C6EA29209CC6006F119F /* Injected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6E929209CC6006F119F /* Injected.swift */; };
+		5213C6EC29209CD6006F119F /* InjectionResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6EB29209CD6006F119F /* InjectionResolver.swift */; };
+		5213C6F029209D09006F119F /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6EF29209D09006F119F /* ViewModelFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +37,13 @@
 		3289DFFC275AF2190058C710 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3289E009275AF3430058C710 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		5213C6DB29209660006F119F /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
+		5213C6DD2920974F006F119F /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
+		5213C6E1292097CD006F119F /* UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelpers.swift; sourceTree = "<group>"; };
+		5213C6E3292099B9006F119F /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		5213C6E729209C8A006F119F /* MoviesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewModel.swift; sourceTree = "<group>"; };
+		5213C6E929209CC6006F119F /* Injected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injected.swift; sourceTree = "<group>"; };
+		5213C6EB29209CD6006F119F /* InjectionResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectionResolver.swift; sourceTree = "<group>"; };
+		5213C6EF29209D09006F119F /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,10 +86,12 @@
 		3289DFED275AF2170058C710 /* Movie Challenge */ = {
 			isa = PBXGroup;
 			children = (
+				5213C6DF2920979E006F119F /* Core */,
 				5213C6D9291FACD6006F119F /* Data */,
 				5213C6D8291FACCF006F119F /* Domain */,
 				5213C6D6291FAC95006F119F /* Presentation */,
 				5213C6D5291FAC7C006F119F /* Network */,
+				5213C6E0292097B1006F119F /* Helper & Extension */,
 				5213C6D4291FAC74006F119F /* Assets */,
 				5213C6D3291FAC34006F119F /* Resources */,
 				3284FFD3275B0CEA0039F3EB /* Generated */,
@@ -114,17 +130,18 @@
 		5213C6D6291FAC95006F119F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				5213C6D7291FACA3006F119F /* Movies List View */,
+				5213C6D7291FACA3006F119F /* Movies List */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		5213C6D7291FACA3006F119F /* Movies List View */ = {
+		5213C6D7291FACA3006F119F /* Movies List */ = {
 			isa = PBXGroup;
 			children = (
-				5213C6DB29209660006F119F /* MovieListViewController.swift */,
+				5213C6E529209BD1006F119F /* View */,
+				5213C6E629209BD6006F119F /* View Model */,
 			);
-			path = "Movies List View";
+			path = "Movies List";
 			sourceTree = "<group>";
 		};
 		5213C6D8291FACCF006F119F /* Domain */ = {
@@ -139,6 +156,58 @@
 			children = (
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		5213C6DF2920979E006F119F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				5213C6ED29209CE4006F119F /* Dependency Injection */,
+				5213C6EE29209CF1006F119F /* Factory */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		5213C6E0292097B1006F119F /* Helper & Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5213C6E1292097CD006F119F /* UIHelpers.swift */,
+				5213C6E3292099B9006F119F /* UIViewExtension.swift */,
+			);
+			path = "Helper & Extension";
+			sourceTree = "<group>";
+		};
+		5213C6E529209BD1006F119F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5213C6DB29209660006F119F /* MovieListViewController.swift */,
+				5213C6DD2920974F006F119F /* MovieListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5213C6E629209BD6006F119F /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				5213C6E729209C8A006F119F /* MoviesListViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		5213C6ED29209CE4006F119F /* Dependency Injection */ = {
+			isa = PBXGroup;
+			children = (
+				5213C6E929209CC6006F119F /* Injected.swift */,
+				5213C6EB29209CD6006F119F /* InjectionResolver.swift */,
+			);
+			path = "Dependency Injection";
+			sourceTree = "<group>";
+		};
+		5213C6EE29209CF1006F119F /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				5213C6EF29209D09006F119F /* ViewModelFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,8 +313,15 @@
 				3289DFEF275AF2170058C710 /* AppDelegate.swift in Sources */,
 				3289DFF1275AF2170058C710 /* SceneDelegate.swift in Sources */,
 				5213C6DC29209660006F119F /* MovieListViewController.swift in Sources */,
+				5213C6E829209C8A006F119F /* MoviesListViewModel.swift in Sources */,
 				3289E00A275AF3430058C710 /* Network.swift in Sources */,
+				5213C6EA29209CC6006F119F /* Injected.swift in Sources */,
+				5213C6EC29209CD6006F119F /* InjectionResolver.swift in Sources */,
+				5213C6E2292097CD006F119F /* UIHelpers.swift in Sources */,
 				3284FFD6275B0CEA0039F3EB /* Movies.graphql.swift in Sources */,
+				5213C6F029209D09006F119F /* ViewModelFactory.swift in Sources */,
+				5213C6E4292099B9006F119F /* UIViewExtension.swift in Sources */,
+				5213C6DE2920974F006F119F /* MovieListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
