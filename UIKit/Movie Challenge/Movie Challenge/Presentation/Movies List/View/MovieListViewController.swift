@@ -30,15 +30,34 @@ class MovieListViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-      super.viewDidLoad()
-         
+        super.viewDidLoad()
+        setUI()
+        viewModel?.fetchMovies()
         bindViewModel()
-        getData()
+        
+    }
+    
+    func setUI() {
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     func bindViewModel() {
         viewModel?.$screenTitle.sink(receiveValue: { title in
             self.title = title
         }).store(in: &cancellables)
+        
+        viewModel?.$movies.sink(receiveValue: { movies in
+            self.movieListView.movies = movies
+            DispatchQueue.main.async {
+                self.movieListView.tableView.reloadData()
+            }
+        }).store(in: &cancellables)
     }
+    
+    deinit {
+        cancellables.forEach { cancellable in
+            cancellable.cancel()
+        }
+    }
+    
 }

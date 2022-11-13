@@ -29,6 +29,9 @@
 		5213C6F72920A672006F119F /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6F62920A672006F119F /* RepositoryFactory.swift */; };
 		5213C6F92920A75B006F119F /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6F82920A75B006F119F /* ViewControllerFactory.swift */; };
 		5213C6FB2920CCF5006F119F /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6FA2920CCF5006F119F /* UseCaseFactory.swift */; };
+		5213C6FD2920D07C006F119F /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6FC2920D07C006F119F /* MovieTableViewCell.swift */; };
+		5213C6FF2920D38C006F119F /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C6FE2920D38C006F119F /* UITableViewCellExtension.swift */; };
+		5213C7012920D9C4006F119F /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C7002920D9C4006F119F /* UIImageViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		5213C6F62920A672006F119F /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
 		5213C6F82920A75B006F119F /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		5213C6FA2920CCF5006F119F /* UseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
+		5213C6FC2920D07C006F119F /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		5213C6FE2920D38C006F119F /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
+		5213C7002920D9C4006F119F /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +190,8 @@
 			children = (
 				5213C6E1292097CD006F119F /* UIHelpers.swift */,
 				5213C6E3292099B9006F119F /* UIViewExtension.swift */,
+				5213C6FE2920D38C006F119F /* UITableViewCellExtension.swift */,
+				5213C7002920D9C4006F119F /* UIImageViewExtension.swift */,
 			);
 			path = "Helper & Extension";
 			sourceTree = "<group>";
@@ -193,6 +201,7 @@
 			children = (
 				5213C6DB29209660006F119F /* MovieListViewController.swift */,
 				5213C6DD2920974F006F119F /* MovieListView.swift */,
+				5213C6FC2920D07C006F119F /* MovieTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -335,6 +344,7 @@
 			files = (
 				5213C6F22920A0F2006F119F /* MoviesRepository.swift in Sources */,
 				3289DFEF275AF2170058C710 /* AppDelegate.swift in Sources */,
+				5213C6FD2920D07C006F119F /* MovieTableViewCell.swift in Sources */,
 				3289DFF1275AF2170058C710 /* SceneDelegate.swift in Sources */,
 				5213C6FB2920CCF5006F119F /* UseCaseFactory.swift in Sources */,
 				5213C6DC29209660006F119F /* MovieListViewController.swift in Sources */,
@@ -342,9 +352,11 @@
 				3289E00A275AF3430058C710 /* Network.swift in Sources */,
 				5213C6F72920A672006F119F /* RepositoryFactory.swift in Sources */,
 				5213C6EA29209CC6006F119F /* Injected.swift in Sources */,
+				5213C7012920D9C4006F119F /* UIImageViewExtension.swift in Sources */,
 				5213C6EC29209CD6006F119F /* InjectionResolver.swift in Sources */,
 				5213C6E2292097CD006F119F /* UIHelpers.swift in Sources */,
 				3284FFD6275B0CEA0039F3EB /* Movies.graphql.swift in Sources */,
+				5213C6FF2920D38C006F119F /* UITableViewCellExtension.swift in Sources */,
 				5213C6F029209D09006F119F /* ViewModelFactory.swift in Sources */,
 				5213C6E4292099B9006F119F /* UIViewExtension.swift in Sources */,
 				5213C6F92920A75B006F119F /* ViewControllerFactory.swift in Sources */,
