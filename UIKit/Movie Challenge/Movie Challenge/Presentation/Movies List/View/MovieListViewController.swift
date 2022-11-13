@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class MovieListViewController: UIViewController {
     
     var viewModel: MoviesListViewModel?
+    private var cancellables: Set<AnyCancellable> = []
     
     var movieListView: MovieListView {
         guard let unwrappedView = self.view as? MovieListView else {
@@ -29,6 +31,15 @@ class MovieListViewController: UIViewController {
     
     override func viewDidLoad() {
       super.viewDidLoad()
+         
+        bindViewModel()
+        getData()
+    }
+    
+    func bindViewModel() {
+        viewModel?.$screenTitle.sink(receiveValue: { title in
+            self.title = title
+        }).store(in: &cancellables)
     }
     
     func getData() {

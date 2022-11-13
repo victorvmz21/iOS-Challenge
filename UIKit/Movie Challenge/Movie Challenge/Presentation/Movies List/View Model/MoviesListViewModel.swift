@@ -9,5 +9,6 @@ import Foundation
 
 class MoviesListViewModel: ObservableObject {
     
-    @Published var screenTitle: String = "Movies"
+    @Published
+    var screenTitle: String = "Movies"
 }
