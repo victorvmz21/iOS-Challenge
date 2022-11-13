@@ -13,4 +13,6 @@ class InjectionResolver {
     
     //MARK: - Factories
     lazy var viewModelFactory: ViewModelFactoryProtocol = ViewModelFactory()
+    lazy var repositoryFactory: RepositoryFactoryProtocol = RepositoryFactory()
+    
 }

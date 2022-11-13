@@ -9,11 +9,11 @@ import Foundation
 import Apollo
 
 protocol MoviesRepositoryProtocol {
-    func getMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data,Error>) -> Void)
+    func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data,Error>) -> Void)
 }
 
 class MoviesRepository: MoviesRepositoryProtocol {
-    func getMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data, Error>) -> Void) {
+    func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data, Error>) -> Void) {
         
         let query = GetMoviesQueryQuery()
         Network.shared.apollo.fetch(query: query) { result in
@@ -27,7 +27,6 @@ class MoviesRepository: MoviesRepositoryProtocol {
               completion(.failure(error))
           }
         }
-        
     }
 }
 
