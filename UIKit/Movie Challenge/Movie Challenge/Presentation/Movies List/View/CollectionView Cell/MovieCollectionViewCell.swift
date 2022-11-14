@@ -12,15 +12,19 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .label
+        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
     private let rateLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 14)
+        label.backgroundColor = .black.withAlphaComponent(0.6)
+        label.layer.borderColor =  UIColor.white.cgColor
+        label.layer.borderWidth = 1
         return label
     }()
     
@@ -45,16 +49,32 @@ extension MovieCollectionViewCell: ViewSetupProtocol {
         contentView.addSubview(titleLabel)
         
         rateLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(rateLabel)
+        posterImageView.addSubview(rateLabel)
     }
     
     func configureConstraints() {
         posterImageView.anchor(
             top: self.topAnchor, paddingTop: 10,
-            left: self.leftAnchor, width: 90, height: 130)
+            left: self.leftAnchor,
+            width: 100, height: 160
+        )
+        
+        titleLabel.anchor(
+            top: posterImageView.bottomAnchor, paddingTop: 4,
+            left: posterImageView.leftAnchor,
+            right: posterImageView.rightAnchor
+        )
+        
+        rateLabel.anchor(
+            top: posterImageView.topAnchor, paddingTop: 10,
+            right: posterImageView.rightAnchor, paddingRight: -6
+        )
     }
     
     func fillCellWith(movie: GetMoviesQueryQuery.Data.Movie?) {
         posterImageView.loadImageFrom(url: movie?.posterPath ?? "")
+        titleLabel.text = movie?.title ?? "title not available"
+        rateLabel.text = " \(movie?.voteAverage ?? 0.0) "
+        
     }
 }

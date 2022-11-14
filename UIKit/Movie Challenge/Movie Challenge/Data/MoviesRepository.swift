@@ -10,6 +10,8 @@ import Apollo
 
 protocol MoviesRepositoryProtocol {
     func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data,Error>) -> Void)
+    func fetchTopFiveMovies(completion: @escaping (Result<TopMoviesQueryQuery.Data,Error>) -> Void)
+    func fetchGenres(completion: @escaping (Result<GetGenresQuery.Data,Error>) -> Void)
 }
 
 class MoviesRepository: MoviesRepositoryProtocol {
@@ -20,6 +22,36 @@ class MoviesRepository: MoviesRepositoryProtocol {
           switch result {
             case .success(let graphQLResult):
               print("Found \(graphQLResult.data?.movies?.count ?? 0) movies")
+              guard let movieData = graphQLResult.data else { return }
+              completion(.success(movieData))
+            case .failure(let error):
+              print("Error getting movies: \(error.localizedDescription)")
+              completion(.failure(error))
+          }
+        }
+    }
+    
+    func fetchTopFiveMovies(completion: @escaping (Result<TopMoviesQueryQuery.Data, Error>) -> Void) {
+        let query = TopMoviesQueryQuery()
+        Network.shared.apollo.fetch(query: query) { result in
+          switch result {
+            case .success(let graphQLResult):
+              print("Found \(graphQLResult.data?.movies?.count ?? 0) movies")
+              guard let movieData = graphQLResult.data else { return }
+              completion(.success(movieData))
+            case .failure(let error):
+              print("Error getting movies: \(error.localizedDescription)")
+              completion(.failure(error))
+          }
+        }
+    }
+    
+    func fetchGenres(completion: @escaping (Result<GetGenresQuery.Data, Error>) -> Void) {
+        let query = GetGenresQuery()
+        Network.shared.apollo.fetch(query: query) { result in
+          switch result {
+            case .success(let graphQLResult):
+              print("Found \(graphQLResult.data?.genres.count ?? 0) genres")
               guard let movieData = graphQLResult.data else { return }
               completion(.success(movieData))
             case .failure(let error):

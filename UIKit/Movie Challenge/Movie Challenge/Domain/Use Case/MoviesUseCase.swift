@@ -9,6 +9,8 @@ import Foundation
 
 protocol MoviesUseCaseProtocol {
     func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data,Error>) -> Void)
+    func fetchTopFiveMovies(completion: @escaping (Result<TopMoviesQueryQuery.Data,Error>) -> Void)
+    func fetchGenres(completion: @escaping (Result<GetGenresQuery.Data,Error>) -> Void)
 }
 
 class MoviesUseCase: MoviesUseCaseProtocol {
@@ -21,5 +23,13 @@ class MoviesUseCase: MoviesUseCaseProtocol {
     
     func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data, Error>) -> Void) {
         repository.fetchMovies(completion: completion)
+    }
+    
+    func fetchTopFiveMovies(completion: @escaping (Result<TopMoviesQueryQuery.Data,Error>) -> Void) {
+        repository.fetchTopFiveMovies(completion: completion)
+    }
+    
+    func fetchGenres(completion: @escaping (Result<GetGenresQuery.Data,Error>) -> Void) {
+        repository.fetchGenres(completion: completion)
     }
 }

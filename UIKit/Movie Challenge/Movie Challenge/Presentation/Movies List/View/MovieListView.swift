@@ -10,17 +10,30 @@ import Apollo
 
 class MovieListView: UIView {
     
-    var collectionView: UICollectionView = {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: layout)
-        return collectionView
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.register(
+            TopFiveMovieCell.self,
+            forCellReuseIdentifier: TopFiveMovieCell.identifier
+        )
+        
+        tableView.register(
+            MoviesTableViewCell.self,
+            forCellReuseIdentifier: MoviesTableViewCell.identifier
+        )
+        
+        tableView.register(
+            GenresTableViewCell.self,
+            forCellReuseIdentifier: GenresTableViewCell.identifier
+        )
+    
+        return tableView
     }()
     
     var movies: [GetMoviesQueryQuery.Data.Movie?]?
+    var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?]?
+    var genres: [String]?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,41 +47,81 @@ class MovieListView: UIView {
 
 extension MovieListView: ViewSetupProtocol {
     func configureSubviews() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        addSubview(collectionView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        addSubview(tableView)
     }
     
     func configureConstraints() {
-        collectionView.anchor(
+        tableView.anchor(
             top: self.topAnchor,
             bottom: self.bottomAnchor,
             left: self.leftAnchor,
             right: self.rightAnchor
         )
-        
     }
 }
-
-extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MovieListView: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies?.count ?? 0
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return setTableViewViewCell(tableView: tableView, indexPath: indexPath)
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-        guard let movies = movies else { return UICollectionViewCell() }
-        cell.fillCellWith(movie: movies[indexPath.row])
-        
-        return cell
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
     }
     
-
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Top 5 Movies"
+        } else if section == 1 {
+            return "Genres"
+        } else {
+            return "All Movies"
+        }
+    }
+    
+    func setTableViewViewCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TopFiveMovieCell.identifier, for: indexPath) as? TopFiveMovieCell else {
+                return UITableViewCell()
+            }
+            guard let topFiveMovies = topFiveMovies else { return UITableViewCell() }
+            cell.layoutIfNeeded()
+            cell.topFiveMovies = topFiveMovies
+            return cell
+            
+        } else if indexPath.section == 1 {
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GenresTableViewCell.identifier, for: indexPath) as? GenresTableViewCell else {
+                return UITableViewCell()
+            }
+            guard let genres = genres else { return UITableViewCell() }
+            cell.layoutIfNeeded()
+            cell.genres = genres
+            return cell
+            
+        } else if indexPath.section == 2 {
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MoviesTableViewCell.identifier, for: indexPath) as? MoviesTableViewCell else {
+                return UITableViewCell()
+            }
+            guard let allMovies = movies else { return UITableViewCell() }
+            cell.layoutIfNeeded()
+            cell.allMovies = allMovies
+            return cell
+            
+        }
+        return UITableViewCell()
+    }
+    
 }

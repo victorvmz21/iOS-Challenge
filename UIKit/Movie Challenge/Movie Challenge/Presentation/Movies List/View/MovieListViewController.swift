@@ -32,7 +32,7 @@ class MovieListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        viewModel?.fetchMovies()
+        viewModel?.getAllData()
         bindViewModel()
         
     }
@@ -48,8 +48,21 @@ class MovieListViewController: UIViewController {
         
         viewModel?.$movies.sink(receiveValue: { movies in
             self.movieListView.movies = movies
-            DispatchQueue.main.async {
-                self.movieListView.collectionView.reloadData()
+        }).store(in: &cancellables)
+        
+        viewModel?.$topFiveMovies.sink(receiveValue: { movies in
+            self.movieListView.topFiveMovies = movies
+        }).store(in: &cancellables)
+        
+        viewModel?.$genres.sink(receiveValue: { genres in
+            self.movieListView.genres = genres
+        }).store(in: &cancellables)
+        
+        viewModel?.$isDataAvailable.sink(receiveValue: { isDataAvailable in
+            if isDataAvailable {
+                DispatchQueue.main.async {
+                    self.movieListView.tableView.reloadData()
+                }
             }
         }).store(in: &cancellables)
     }
