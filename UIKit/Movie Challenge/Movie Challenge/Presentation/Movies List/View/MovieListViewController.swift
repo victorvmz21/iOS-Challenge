@@ -49,7 +49,7 @@ class MovieListViewController: UIViewController {
         viewModel?.$movies.sink(receiveValue: { movies in
             self.movieListView.movies = movies
             DispatchQueue.main.async {
-                self.movieListView.tableView.reloadData()
+                self.movieListView.collectionView.reloadData()
             }
         }).store(in: &cancellables)
     }

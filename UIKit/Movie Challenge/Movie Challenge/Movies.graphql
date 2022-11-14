@@ -1,16 +1,27 @@
 query GetMoviesQuery {
- movies {
-    title
-    genres
-    voteAverage
-    posterPath
-    overview
+  movies {
+    id, title, voteAverage, posterPath
+  }
+}
+
+query MovieDetail($identifier: Int!){
+  movie(id: $identifier) {
+    title, voteAverage, posterPath, overview, genres,
     cast {
-      name
-      profilePath
+        name
     }
     director {
-      name
+        name
     }
   }
+}
+
+query TopMoviesQuery {
+  movies(limit: 5, orderBy: "voteAverage", sort: DESC) {
+    id, title, voteAverage, posterPath
+  }
+}
+
+query GetGenres {
+  genres
 }
