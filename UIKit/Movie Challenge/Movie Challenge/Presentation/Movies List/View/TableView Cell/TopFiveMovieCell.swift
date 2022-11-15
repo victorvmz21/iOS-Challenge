@@ -33,7 +33,8 @@ class TopFiveMovieCell: UITableViewCell {
         setupSubviews()
     }
 
-    
+    var coordinator: CoordinatorProtocol?
+    var nav: UINavigationController?
     var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?]? {
         didSet {
             if topFiveMovies != nil {
@@ -42,6 +43,12 @@ class TopFiveMovieCell: UITableViewCell {
                 }
             }
         }
+    }
+    
+    func setCellWith(values movies:[TopMoviesQueryQuery.Data.Movie?]?, _ nav: UINavigationController, coordinator: CoordinatorProtocol) {
+        self.coordinator = coordinator
+        self.nav = nav
+        self.topFiveMovies = movies
     }
     
 }
@@ -91,6 +98,12 @@ extension TopFiveMovieCell: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 20, right: -20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let movieID = topFiveMovies?[indexPath.row]?.id else { return }
+        guard let nav = nav else { return }
+        coordinator?.toDetailScreen(movieID: movieID, nav: nav)
     }
 
 }

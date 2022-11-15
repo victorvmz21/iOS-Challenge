@@ -5,33 +5,25 @@
 //  Created by Victor Monteiro on 11/12/22.
 //
 
-import Foundation
+import UIKit
 import Apollo
 
 class MoviesListViewModel: ObservableObject {
     
-    @Published
-    var screenTitle: String = "Movies"
-    
-    @Published
-    var movies: [GetMoviesQueryQuery.Data.Movie?] = []
-    
-    @Published
-    var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?] = []
-    
-    @Published
-    var genres: [String] = []
-    
-    @Published
-    var isDataAvailable: Bool = false
-    
-    @Published
-    var errorMessage: String = ""
+    @Published var screenTitle: String = "Movies"
+    @Published var movies: [GetMoviesQueryQuery.Data.Movie?] = []
+    @Published var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?] = []
+    @Published var genres: [String] = []
+    @Published var isDataAvailable: Bool = false
+    @Published var errorMessage: String = ""
     
     let movieUseCase: MoviesUseCaseProtocol
+    let coordinator: CoordinatorProtocol
     
-    init(movieUseCase: MoviesUseCaseProtocol) {
+    init(movieUseCase: MoviesUseCaseProtocol,
+         coordinator: CoordinatorProtocol) {
         self.movieUseCase = movieUseCase
+        self.coordinator = coordinator
     }
     
     func fetchMovies(completion: @escaping (Bool) -> Void) {
@@ -86,6 +78,6 @@ class MoviesListViewModel: ObservableObject {
                 }
             }
         }
-
+        
     }
 }

@@ -32,8 +32,10 @@ class MovieListView: UIView {
     }()
     
     var movies: [GetMoviesQueryQuery.Data.Movie?]?
+    var nav: UINavigationController?
     var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?]?
     var genres: [String]?
+    var coordinator: CoordinatorProtocol?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -96,8 +98,12 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             guard let topFiveMovies = topFiveMovies else { return UITableViewCell() }
+            guard let nav = nav else { return UITableViewCell() }
+            guard let coordinator = coordinator else { return UITableViewCell() }
+            
             cell.layoutIfNeeded()
-            cell.topFiveMovies = topFiveMovies
+            cell.setCellWith(values: topFiveMovies, nav, coordinator: coordinator)
+            
             return cell
             
         } else if indexPath.section == 1 {

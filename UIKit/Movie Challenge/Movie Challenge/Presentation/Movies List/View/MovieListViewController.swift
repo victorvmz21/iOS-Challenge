@@ -10,7 +10,7 @@ import Combine
 
 class MovieListViewController: UIViewController {
     
-    var viewModel: MoviesListViewModel?
+    var viewModel: MoviesListViewModel
     private var cancellables: Set<AnyCancellable> = []
     
     var movieListView: MovieListView {
@@ -20,9 +20,13 @@ class MovieListViewController: UIViewController {
         return unwrappedView
     }
     
-    required convenience init(viewModel: MoviesListViewModel) {
-        self.init()
+    init(viewModel: MoviesListViewModel) {
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
@@ -32,33 +36,35 @@ class MovieListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        viewModel?.getAllData()
+        viewModel.getAllData()
         bindViewModel()
         
     }
     
     func setUI() {
         navigationController?.navigationBar.prefersLargeTitles = true
+        movieListView.coordinator = viewModel.coordinator
+        movieListView.nav = self.navigationController
     }
     
     func bindViewModel() {
-        viewModel?.$screenTitle.sink(receiveValue: { title in
+        viewModel.$screenTitle.sink(receiveValue: { title in
             self.title = title
         }).store(in: &cancellables)
         
-        viewModel?.$movies.sink(receiveValue: { movies in
+        viewModel.$movies.sink(receiveValue: { movies in
             self.movieListView.movies = movies
         }).store(in: &cancellables)
         
-        viewModel?.$topFiveMovies.sink(receiveValue: { movies in
+        viewModel.$topFiveMovies.sink(receiveValue: { movies in
             self.movieListView.topFiveMovies = movies
         }).store(in: &cancellables)
         
-        viewModel?.$genres.sink(receiveValue: { genres in
+        viewModel.$genres.sink(receiveValue: { genres in
             self.movieListView.genres = genres
         }).store(in: &cancellables)
         
-        viewModel?.$isDataAvailable.sink(receiveValue: { isDataAvailable in
+        viewModel.$isDataAvailable.sink(receiveValue: { isDataAvailable in
             if isDataAvailable {
                 DispatchQueue.main.async {
                     self.movieListView.tableView.reloadData()

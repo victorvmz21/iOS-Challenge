@@ -16,5 +16,6 @@ class InjectionResolver {
     lazy var viewModelFactory: ViewModelFactoryProtocol = ViewModelFactory()
     lazy var repositoryFactory: RepositoryFactoryProtocol = RepositoryFactory()
     lazy var useCaseFactory: UseCaseFactoryProtocol = UseCaseFactory()
+    lazy var coordinatorFactory: CoordinatorFactoryProtocol = CoordinatorFactory()
     
 }

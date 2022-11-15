@@ -14,8 +14,12 @@ protocol ViewModelFactoryProtocol {
 class ViewModelFactory: ViewModelFactoryProtocol {
     
     @Injected(\.useCaseFactory) var useCaseFactory
+    @Injected(\.coordinatorFactory) var coordinatorFactory
     
     func createMoviesListViewModel() -> MoviesListViewModel {
-        return MoviesListViewModel(movieUseCase: useCaseFactory.createMovieUseCase())
+        return MoviesListViewModel(
+            movieUseCase: useCaseFactory.createMovieUseCase(),
+            coordinator: coordinatorFactory.createMainCoordinator()
+        )
     }
 }

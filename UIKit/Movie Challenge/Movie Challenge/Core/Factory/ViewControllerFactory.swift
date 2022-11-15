@@ -9,6 +9,7 @@ import Foundation
 
 protocol ViewControllerFactoryProtocol {
     func createMovieListViewController() -> MovieListViewController
+    func createMovieDetail() -> MovieDetailViewController
 }
 
 class ViewControllerFactory: ViewControllerFactoryProtocol {
@@ -16,6 +17,12 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
     @Injected(\.viewModelFactory) var viewModelFactory
     
     func createMovieListViewController() -> MovieListViewController {
-        return MovieListViewController(viewModel: viewModelFactory.createMoviesListViewModel())
+        return MovieListViewController(
+            viewModel: viewModelFactory.createMoviesListViewModel()
+        )
+    }
+    
+    func createMovieDetail() -> MovieDetailViewController {
+        return MovieDetailViewController()
     }
 }
