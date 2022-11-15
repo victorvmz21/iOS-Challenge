@@ -15,17 +15,15 @@ protocol MoviesRepositoryProtocol {
 }
 
 class MoviesRepository: MoviesRepositoryProtocol {
+    
     func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data, Error>) -> Void) {
-        
         let query = GetMoviesQueryQuery()
         Network.shared.apollo.fetch(query: query) { result in
           switch result {
             case .success(let graphQLResult):
-              print("Found \(graphQLResult.data?.movies?.count ?? 0) movies")
               guard let movieData = graphQLResult.data else { return }
               completion(.success(movieData))
             case .failure(let error):
-              print("Error getting movies: \(error.localizedDescription)")
               completion(.failure(error))
           }
         }
@@ -36,11 +34,9 @@ class MoviesRepository: MoviesRepositoryProtocol {
         Network.shared.apollo.fetch(query: query) { result in
           switch result {
             case .success(let graphQLResult):
-              print("Found \(graphQLResult.data?.movies?.count ?? 0) movies")
               guard let movieData = graphQLResult.data else { return }
               completion(.success(movieData))
             case .failure(let error):
-              print("Error getting movies: \(error.localizedDescription)")
               completion(.failure(error))
           }
         }
@@ -51,11 +47,9 @@ class MoviesRepository: MoviesRepositoryProtocol {
         Network.shared.apollo.fetch(query: query) { result in
           switch result {
             case .success(let graphQLResult):
-              print("Found \(graphQLResult.data?.genres.count ?? 0) genres")
               guard let movieData = graphQLResult.data else { return }
               completion(.success(movieData))
             case .failure(let error):
-              print("Error getting movies: \(error.localizedDescription)")
               completion(.failure(error))
           }
         }

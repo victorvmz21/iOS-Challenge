@@ -9,10 +9,16 @@ import Foundation
 
 protocol RepositoryFactoryProtocol {
     func createMoviesrepository() -> MoviesRepository
+    func createMoviesDetailRepository() -> MoviesDetailRepository
 }
 
 class RepositoryFactory: RepositoryFactoryProtocol {
+    
     func createMoviesrepository() -> MoviesRepository {
         return MoviesRepository()
+    }
+    
+    func createMoviesDetailRepository() -> MoviesDetailRepository {
+        return MoviesDetailRepository()
     }
 }

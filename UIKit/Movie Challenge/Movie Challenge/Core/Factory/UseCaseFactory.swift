@@ -9,6 +9,7 @@ import Foundation
 
 protocol UseCaseFactoryProtocol {
     func createMovieUseCase() -> MoviesUseCase
+    func createMoviesDetailUseCase() -> MoviesDetailUseCase
 }
 
 class UseCaseFactory: UseCaseFactoryProtocol {
@@ -17,5 +18,10 @@ class UseCaseFactory: UseCaseFactoryProtocol {
     
     func createMovieUseCase() -> MoviesUseCase {
         return MoviesUseCase(repository: repositoryFactory.createMoviesrepository())
+    }
+    
+    func createMoviesDetailUseCase() -> MoviesDetailUseCase {
+        return MoviesDetailUseCase(repository: repositoryFactory.createMoviesDetailRepository()
+        )
     }
 }

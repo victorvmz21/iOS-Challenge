@@ -48,29 +48,29 @@ class MovieListViewController: UIViewController {
     }
     
     func bindViewModel() {
-        viewModel.$screenTitle.sink(receiveValue: { title in
+        viewModel.$screenTitle.sink { title in
             self.title = title
-        }).store(in: &cancellables)
+        }.store(in: &cancellables)
         
-        viewModel.$movies.sink(receiveValue: { movies in
+        viewModel.$movies.sink{ movies in
             self.movieListView.movies = movies
-        }).store(in: &cancellables)
+        }.store(in: &cancellables)
         
-        viewModel.$topFiveMovies.sink(receiveValue: { movies in
+        viewModel.$topFiveMovies.sink { movies in
             self.movieListView.topFiveMovies = movies
-        }).store(in: &cancellables)
+        }.store(in: &cancellables)
         
-        viewModel.$genres.sink(receiveValue: { genres in
+        viewModel.$genres.sink { genres in
             self.movieListView.genres = genres
-        }).store(in: &cancellables)
+        }.store(in: &cancellables)
         
-        viewModel.$isDataAvailable.sink(receiveValue: { isDataAvailable in
+        viewModel.$isDataAvailable.sink { isDataAvailable in
             if isDataAvailable {
                 DispatchQueue.main.async {
                     self.movieListView.tableView.reloadData()
                 }
             }
-        }).store(in: &cancellables)
+        }.store(in: &cancellables)
     }
     
     deinit {

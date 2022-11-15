@@ -23,6 +23,6 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
     }
     
     func createMovieDetail() -> MovieDetailViewController {
-        return MovieDetailViewController()
+        return MovieDetailViewController(viewModel: viewModelFactory.createMoviesDetailViewModel())
     }
 }
