@@ -40,6 +40,10 @@ class MovieListViewController: UIViewController {
         bindViewModel()
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.tintColor = .systemBlue
+    }
     
     func setUI() {
         navigationController?.navigationBar.prefersLargeTitles = true

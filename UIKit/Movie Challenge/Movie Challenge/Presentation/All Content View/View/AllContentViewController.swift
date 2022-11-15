@@ -36,6 +36,11 @@ class AllContentViewController: UIViewController {
         super.viewDidLoad()
         setUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.tintColor = .systemBlue
+    }
 
     func setUI() {
         allContentView.allMovies = allMovies
