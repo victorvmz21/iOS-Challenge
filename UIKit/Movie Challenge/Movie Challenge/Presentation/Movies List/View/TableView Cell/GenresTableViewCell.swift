@@ -33,6 +33,8 @@ class GenresTableViewCell: UITableViewCell {
         setupSubviews()
     }
 
+    var coordinator: CoordinatorProtocol?
+    var nav: UINavigationController?
     var genres: [String]? {
         didSet {
             if genres != nil {
@@ -41,6 +43,12 @@ class GenresTableViewCell: UITableViewCell {
                 }
             }
         }
+    }
+    
+    func setCellWith(values genres:[String]?, _ nav: UINavigationController, coordinator: CoordinatorProtocol) {
+        self.coordinator = coordinator
+        self.nav = nav
+        self.genres = genres
     }
     
 }
@@ -90,6 +98,13 @@ extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 20, right: -20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let genre = genres?[indexPath.row] else { return }
+        print("Genre: \(genre)")
+        guard let nav = nav else { return }
+        coordinator?.toAllContentScreen(allMovies: nil, genreIdentifier: genre, nav: nav)
     }
 
 }

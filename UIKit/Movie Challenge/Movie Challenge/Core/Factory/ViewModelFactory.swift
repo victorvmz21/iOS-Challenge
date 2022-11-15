@@ -33,6 +33,9 @@ class ViewModelFactory: ViewModelFactoryProtocol {
     }
     
     func createAllContentViewModel() -> AllContenteViewModel {
-        return AllContenteViewModel(coordinator: coordinatorFactory.createMainCoordinator())
+        return AllContenteViewModel(
+            coordinator: coordinatorFactory.createMainCoordinator(),
+            movieUseCase: useCaseFactory.createMovieUseCase()
+        )
     }
 }

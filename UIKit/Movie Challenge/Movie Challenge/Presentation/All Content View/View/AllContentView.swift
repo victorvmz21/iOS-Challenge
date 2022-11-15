@@ -27,11 +27,17 @@ class AllContentView: UIView {
             forCellWithReuseIdentifier: MovieCollectionViewCell.identifier
         )
         
+        collectionView.register(
+            MoviesByGenreCollectionViewCell.self,
+            forCellWithReuseIdentifier: MoviesByGenreCollectionViewCell.identifier
+        )
+        
         return collectionView
     }()
     
     var coordinator: CoordinatorProtocol?
     var nav: UINavigationController?
+    var moviesByGenre: [GetMoviesByGenresQuery.Data.Movie?]?
     var allMovies: [GetMoviesQueryQuery.Data.Movie?]? {
         didSet {
             if allMovies != nil {
@@ -42,7 +48,6 @@ class AllContentView: UIView {
         }
     }
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
@@ -80,18 +85,11 @@ extension AllContentView: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return allMovies?.count ?? 0
+        return setNumberOfItemsInSection()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        guard let allMovies = allMovies else { return UICollectionViewCell() }
-        cell.layoutIfNeeded()
-        cell.fillCellWith(movie: allMovies[indexPath.row])
-
-        return cell
+       return setCollectionViewCell(collectionView: collectionView, indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -106,6 +104,37 @@ extension AllContentView: UICollectionViewDelegate, UICollectionViewDataSource, 
         guard let movieID = allMovies?[indexPath.row]?.id else { return }
         guard let nav = nav else { return }
         coordinator?.toDetailScreen(movieID: movieID, nav: nav)
+    }
+    
+    func setCollectionViewCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        if allMovies != nil {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            guard let allMovies = allMovies else { return UICollectionViewCell() }
+            cell.layoutIfNeeded()
+            cell.fillCellWith(movie: allMovies[indexPath.row])
+
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesByGenreCollectionViewCell.identifier, for: indexPath) as? MoviesByGenreCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            guard let moviesByGenre = moviesByGenre else { return UICollectionViewCell() }
+            cell.layoutIfNeeded()
+            cell.fillCellWith(movie: moviesByGenre[indexPath.row])
+
+            return cell
+        }
+    }
+    
+    func setNumberOfItemsInSection() -> Int {
+        if allMovies != nil {
+            return allMovies?.count ?? 0
+        } else {
+            print( moviesByGenre?.count ?? 0)
+            return moviesByGenre?.count ?? 0
+        }
     }
 
 }

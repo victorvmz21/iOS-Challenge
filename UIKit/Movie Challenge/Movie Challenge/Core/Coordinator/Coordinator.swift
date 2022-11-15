@@ -9,7 +9,7 @@ import UIKit
 
 protocol CoordinatorProtocol {
     func toDetailScreen(movieID: Int, nav: UINavigationController)
-    func toAllContentScreen(allMovies: [GetMoviesQueryQuery.Data.Movie?]?, nav: UINavigationController)
+    func toAllContentScreen(allMovies: [GetMoviesQueryQuery.Data.Movie?]?, genreIdentifier: String?, nav: UINavigationController)
     func dismissScreen(nav:UINavigationController)
 }
 
@@ -23,9 +23,10 @@ class Coordinator: CoordinatorProtocol {
         nav.pushViewController(vc, animated: true)
     }
     
-    func toAllContentScreen(allMovies: [GetMoviesQueryQuery.Data.Movie?]?, nav: UINavigationController) {
+    func toAllContentScreen(allMovies: [GetMoviesQueryQuery.Data.Movie?]?, genreIdentifier: String?, nav: UINavigationController) {
         let vc = viewControllerFactory.createAllContentViewController()
         vc.allMovies = allMovies
+        vc.genre = genreIdentifier
         nav.pushViewController(vc, animated: true)
     }
     

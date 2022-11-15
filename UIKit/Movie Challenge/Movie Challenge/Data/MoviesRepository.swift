@@ -12,6 +12,7 @@ protocol MoviesRepositoryProtocol {
     func fetchMovies(completion: @escaping (Result<GetMoviesQueryQuery.Data,Error>) -> Void)
     func fetchTopFiveMovies(completion: @escaping (Result<TopMoviesQueryQuery.Data,Error>) -> Void)
     func fetchGenres(completion: @escaping (Result<GetGenresQuery.Data,Error>) -> Void)
+    func fetchMoviesByGenre(genre: String, completion: @escaping (Result<GetMoviesByGenresQuery.Data,Error>) -> Void)
 }
 
 class MoviesRepository: MoviesRepositoryProtocol {
@@ -54,5 +55,20 @@ class MoviesRepository: MoviesRepositoryProtocol {
           }
         }
     }
+    
+    func fetchMoviesByGenre(genre: String, completion: @escaping (Result<GetMoviesByGenresQuery.Data, Error>) -> Void) {
+        let query = GetMoviesByGenresQuery(genre: genre)
+        Network.shared.apollo.fetch(query: query) { result in
+          switch result {
+            case .success(let graphQLResult):
+              guard let movieData = graphQLResult.data else { return }
+              completion(.success(movieData))
+            case .failure(let error):
+              completion(.failure(error))
+          }
+        }
+    }
 }
+
+
 

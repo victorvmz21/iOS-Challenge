@@ -129,7 +129,7 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
             }
             guard let genres = genres else { return UITableViewCell() }
             cell.layoutIfNeeded()
-            cell.genres = genres
+            cell.setCellWith(values: genres, nav, coordinator: coordinator)
             return cell
             
         } else if indexPath.section == 2 {
@@ -151,7 +151,6 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
 extension MovieListView {
     @objc func openAllMoviesView() {
         guard let nav = nav else { return }
-        coordinator?.toAllContentScreen(allMovies: movies, nav: nav)
-        print("Button called")
+        coordinator?.toAllContentScreen(allMovies: movies, genreIdentifier: nil, nav: nav)
     }
 }

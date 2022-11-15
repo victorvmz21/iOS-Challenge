@@ -41,7 +41,7 @@ class HeaderView: UIView {
     @objc func buttonAction() {
         guard let movies = movies else { return }
         guard let nav = nav else { return }
-        coordinator?.toAllContentScreen(allMovies: movies, nav: nav)
+        coordinator?.toAllContentScreen(allMovies: movies, genreIdentifier: nil, nav: nav)
     }
     
 }

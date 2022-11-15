@@ -9,13 +9,32 @@ import UIKit
 
 class AllContenteViewModel: ObservableObject {
     
-    let coordinator: CoordinatorProtocol
+    @Published var moviesByGenre: [GetMoviesByGenresQuery.Data.Movie?]? = []
+    @Published var errorMessage: String = ""
     
-    init(coordinator: CoordinatorProtocol) {
+    let coordinator: CoordinatorProtocol
+    let movieUseCase: MoviesUseCaseProtocol
+    
+    init(coordinator: CoordinatorProtocol,
+         movieUseCase: MoviesUseCaseProtocol) {
         self.coordinator = coordinator
+        self.movieUseCase = movieUseCase
     }
     
     func goToDetailScreen(movieID: Int, nav: UINavigationController) {
         coordinator.toDetailScreen(movieID: movieID, nav: nav)
+    }
+    
+    func fetchMoviesByGenre(genre: String?) {
+        guard let genre = genre else { return }
+        movieUseCase.fetchMoviesByGenre(genre: genre) { result in
+            switch result {
+            case .success(let movies):
+                guard let movies = movies.movies else { return }
+                self.moviesByGenre = movies
+            case .failure(let error):
+                self.errorMessage = error.localizedDescription
+            }
+        }
     }
 }

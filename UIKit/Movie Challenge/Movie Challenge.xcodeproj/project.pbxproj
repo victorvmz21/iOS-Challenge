@@ -51,6 +51,7 @@
 		5213C730292376E0006F119F /* AllContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C72F292376E0006F119F /* AllContentView.swift */; };
 		5213C73229237A93006F119F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C73129237A93006F119F /* HeaderView.swift */; };
 		5213C73529238FB4006F119F /* AllContenteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C73429238FB4006F119F /* AllContenteViewModel.swift */; };
+		5213C73829243425006F119F /* MoviesByGenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C73729243425006F119F /* MoviesByGenreCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		5213C72F292376E0006F119F /* AllContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContentView.swift; sourceTree = "<group>"; };
 		5213C73129237A93006F119F /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5213C73429238FB4006F119F /* AllContenteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContenteViewModel.swift; sourceTree = "<group>"; };
+		5213C73729243425006F119F /* MoviesByGenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesByGenreCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,6 +377,7 @@
 			children = (
 				5213C72D292374E1006F119F /* AllContentViewController.swift */,
 				5213C72F292376E0006F119F /* AllContentView.swift */,
+				5213C736292433B1006F119F /* CollecitonView Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -385,6 +388,14 @@
 				5213C73429238FB4006F119F /* AllContenteViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		5213C736292433B1006F119F /* CollecitonView Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5213C73729243425006F119F /* MoviesByGenreCollectionViewCell.swift */,
+			);
+			path = "CollecitonView Cell";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -509,6 +520,7 @@
 				5213C6EC29209CD6006F119F /* InjectionResolver.swift in Sources */,
 				5213C6E2292097CD006F119F /* UIHelpers.swift in Sources */,
 				5213C72E292374E1006F119F /* AllContentViewController.swift in Sources */,
+				5213C73829243425006F119F /* MoviesByGenreCollectionViewCell.swift in Sources */,
 				3284FFD6275B0CEA0039F3EB /* Movies.graphql.swift in Sources */,
 				5213C6FF2920D38C006F119F /* UICollectionViewCellExtension.swift in Sources */,
 				5213C72A292367D8006F119F /* CastCollectionViewCell.swift in Sources */,

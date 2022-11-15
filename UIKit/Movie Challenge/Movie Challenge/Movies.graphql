@@ -25,3 +25,11 @@ query TopMoviesQuery {
 query GetGenres {
   genres
 }
+
+query GetMoviesByGenres($genre: String) {
+  movies(genre: $genre) {
+    id, title, voteAverage, posterPath, genres
+    
+  }
+}
+

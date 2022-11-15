@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 class AllContentViewController: UIViewController {
+    
+    var viewModel: AllContenteViewModel
+    var genre: String?
+    var allMovies: [GetMoviesQueryQuery.Data.Movie?]?
+    private var cancellables: Set<AnyCancellable> = []
     
     var allContentView: AllContentView {
         guard let unwrappedView = self.view as? AllContentView else {
@@ -16,9 +22,6 @@ class AllContentViewController: UIViewController {
         return unwrappedView
     }
     
-    var viewModel: AllContenteViewModel?
-    var allMovies: [GetMoviesQueryQuery.Data.Movie?]?
-
     init(viewModel: AllContenteViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -35,6 +38,8 @@ class AllContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        bindViewModel()
+        getData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,9 +49,24 @@ class AllContentViewController: UIViewController {
 
     func setUI() {
         allContentView.allMovies = allMovies
-        allContentView.coordinator = viewModel?.coordinator
+        allContentView.coordinator = viewModel.coordinator
         allContentView.nav = navigationController
-
+    }
+    
+    func bindViewModel() {
+        viewModel.$moviesByGenre.sink { movies in
+            if movies != nil {
+                self.allContentView.moviesByGenre = movies
+                DispatchQueue.main.async {
+                    self.allContentView.collectionView.reloadData()
+                }
+            }
+        }.store(in: &cancellables)
+    }
+    
+    func getData() {
+        guard let genre = genre else { return }
+        viewModel.fetchMoviesByGenre(genre: genre)
     }
 
 }
