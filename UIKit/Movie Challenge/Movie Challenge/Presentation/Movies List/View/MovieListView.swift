@@ -87,20 +87,36 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
         } else if section == 1 {
             return "Genres"
         } else {
-            return "All Movies"
+            return ""
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = HeaderView()
+        if section == 2 {
+            view.layoutIfNeeded()
+            view.headerSectionTitleLabel.text = "All Movies"
+            return view
+        } else {
+             return nil
+        }
+        
+    }
+    
     func setTableViewViewCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let nav = nav else { return UITableViewCell() }
+        guard let coordinator = coordinator else { return UITableViewCell() }
+        
         if indexPath.section == 0 {
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TopFiveMovieCell.identifier, for: indexPath) as? TopFiveMovieCell else {
                 return UITableViewCell()
             }
-            guard let topFiveMovies = topFiveMovies else { return UITableViewCell() }
-            guard let nav = nav else { return UITableViewCell() }
-            guard let coordinator = coordinator else { return UITableViewCell() }
             
+            guard let topFiveMovies = topFiveMovies else { return UITableViewCell() }
+           
             cell.layoutIfNeeded()
             cell.setCellWith(values: topFiveMovies, nav, coordinator: coordinator)
             
@@ -123,7 +139,7 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
             }
             guard let allMovies = movies else { return UITableViewCell() }
             cell.layoutIfNeeded()
-            cell.allMovies = allMovies
+            cell.setCellWith(values: allMovies, nav, coordinator: coordinator)
             return cell
             
         }

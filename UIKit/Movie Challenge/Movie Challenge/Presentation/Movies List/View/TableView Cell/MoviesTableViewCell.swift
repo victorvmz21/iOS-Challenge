@@ -32,7 +32,8 @@ class MoviesTableViewCell: UITableViewCell {
         setupSubviews()
     }
 
-    
+    var coordinator: CoordinatorProtocol?
+    var nav: UINavigationController?
     var allMovies: [GetMoviesQueryQuery.Data.Movie?]? {
         didSet {
             if allMovies != nil {
@@ -41,6 +42,12 @@ class MoviesTableViewCell: UITableViewCell {
                 }
             }
         }
+    }
+    
+    func setCellWith(values movies:[GetMoviesQueryQuery.Data.Movie?]?, _ nav: UINavigationController, coordinator: CoordinatorProtocol) {
+        self.coordinator = coordinator
+        self.nav = nav
+        self.allMovies = movies
     }
     
 }
@@ -90,6 +97,12 @@ extension MoviesTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 20, right: -20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let movieID = allMovies?[indexPath.row]?.id else { return }
+        guard let nav = nav else { return }
+        coordinator?.toDetailScreen(movieID: movieID, nav: nav)
     }
 
 }
