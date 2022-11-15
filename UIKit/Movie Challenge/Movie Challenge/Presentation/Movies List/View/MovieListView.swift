@@ -33,6 +33,7 @@ class MovieListView: UIView {
     
     var movies: [GetMoviesQueryQuery.Data.Movie?]?
     var nav: UINavigationController?
+    var vc: UIViewController?
     var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?]?
     var genres: [String]?
     var coordinator: CoordinatorProtocol?
@@ -96,11 +97,10 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
         let view = HeaderView()
         if section == 2 {
             view.layoutIfNeeded()
-            view.headerSectionTitleLabel.text = "All Movies"
+            view.configureHeader("All Movies", movies: movies, coordinator: coordinator, nav: nav)
             return view
-        } else {
-             return nil
         }
+        return nil
         
     }
     
@@ -146,4 +146,12 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
+}
+
+extension MovieListView {
+    @objc func openAllMoviesView() {
+        guard let nav = nav else { return }
+        coordinator?.toAllContentScreen(allMovies: movies, nav: nav)
+        print("Button called")
+    }
 }

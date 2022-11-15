@@ -15,11 +15,15 @@ class AllContentViewController: UIViewController {
         }
         return unwrappedView
     }
+    
+    var viewModel: AllContenteViewModel?
+    var allMovies: [GetMoviesQueryQuery.Data.Movie?]?
 
-    init() {
+    init(viewModel: AllContenteViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -30,9 +34,14 @@ class AllContentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setUI()
     }
 
+    func setUI() {
+        allContentView.allMovies = allMovies
+        allContentView.coordinator = viewModel?.coordinator
+        allContentView.nav = navigationController
+
+    }
 
 }

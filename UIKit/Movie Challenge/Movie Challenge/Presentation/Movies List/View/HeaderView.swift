@@ -7,14 +7,7 @@
 
 import UIKit
 
-protocol viewAllMoviesButtonProtocol: AnyObject {
-    func viewAllMovies()
-}
-
 class HeaderView: UIView {
-    
-    weak var delegate: viewAllMoviesButtonProtocol?
-    var vc: UIViewController?
     
     let headerSectionTitleLabel: UILabel = {
         let label = UILabel()
@@ -29,12 +22,26 @@ class HeaderView: UIView {
         return button
     }()
     
+    var movies: [GetMoviesQueryQuery.Data.Movie?]?
+    var coordinator: CoordinatorProtocol?
+    var nav: UINavigationController?
+    
     override func layoutIfNeeded() {
         setupSubviews()
     }
     
-    @objc func viewAllMoviesAction() {
-        delegate?.viewAllMovies()
+    func configureHeader(_ headerTitle: String, movies: [GetMoviesQueryQuery.Data.Movie?]?, coordinator: CoordinatorProtocol?, nav: UINavigationController?) {
+        headerSectionTitleLabel.text = headerTitle
+        self.movies = movies
+        self.coordinator = coordinator
+        self.nav = nav
+        viewAllButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    }
+    
+    @objc func buttonAction() {
+        guard let movies = movies else { return }
+        guard let nav = nav else { return }
+        coordinator?.toAllContentScreen(allMovies: movies, nav: nav)
     }
     
 }
@@ -46,8 +53,6 @@ extension HeaderView: ViewSetupProtocol {
         
         viewAllButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(viewAllButton)
-        guard let vc = vc else { return }
-        viewAllButton.addTarget(vc, action: #selector(viewAllMoviesAction), for: .touchUpInside)
        
     }
     

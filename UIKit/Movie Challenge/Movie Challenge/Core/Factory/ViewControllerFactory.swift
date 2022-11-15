@@ -9,7 +9,8 @@ import Foundation
 
 protocol ViewControllerFactoryProtocol {
     func createMovieListViewController() -> MovieListViewController
-    func createMovieDetail() -> MovieDetailViewController
+    func createMovieDetailViewController() -> MovieDetailViewController
+    func createAllContentViewController() -> AllContentViewController
 }
 
 class ViewControllerFactory: ViewControllerFactoryProtocol {
@@ -22,7 +23,11 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
         )
     }
     
-    func createMovieDetail() -> MovieDetailViewController {
+    func createMovieDetailViewController() -> MovieDetailViewController {
         return MovieDetailViewController(viewModel: viewModelFactory.createMoviesDetailViewModel())
+    }
+    
+    func createAllContentViewController() -> AllContentViewController {
+        return AllContentViewController(viewModel: viewModelFactory.createAllContentViewModel())
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 protocol ViewModelFactoryProtocol {
     func createMoviesListViewModel() -> MoviesListViewModel
     func createMoviesDetailViewModel() -> MoviesDetailViewModel
+    func createAllContentViewModel() -> AllContenteViewModel
 }
 
 class ViewModelFactory: ViewModelFactoryProtocol {
@@ -29,5 +30,9 @@ class ViewModelFactory: ViewModelFactoryProtocol {
             coordinator: coordinatorFactory.createMainCoordinator(),
             moviesDetailUseCase: useCaseFactory.createMoviesDetailUseCase()
         )
+    }
+    
+    func createAllContentViewModel() -> AllContenteViewModel {
+        return AllContenteViewModel(coordinator: coordinatorFactory.createMainCoordinator())
     }
 }

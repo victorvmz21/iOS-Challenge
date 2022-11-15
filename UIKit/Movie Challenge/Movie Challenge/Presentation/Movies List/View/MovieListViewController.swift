@@ -45,6 +45,7 @@ class MovieListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         movieListView.coordinator = viewModel.coordinator
         movieListView.nav = self.navigationController
+        movieListView.vc = self
     }
     
     func bindViewModel() {
