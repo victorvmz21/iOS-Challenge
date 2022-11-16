@@ -77,7 +77,7 @@ class MovieDetailView: UIView {
     let directorTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.text = "Director"
         return label
     }()
@@ -125,10 +125,47 @@ class MovieDetailView: UIView {
         return collectionView
     }()
     
+    let genresTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.text = "Genres"
+        return label
+    }()
+    
+    let genresCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.estimatedItemSize = .zero
+        
+        
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: flowLayout
+        )
+        
+        collectionView.showsHorizontalScrollIndicator = false
+        
+        collectionView.register(
+            CastCollectionViewCell.self,
+            forCellWithReuseIdentifier: CastCollectionViewCell.identifier
+        )
+        
+        return collectionView
+    }()
+    
     var cast: [MovieDetailQuery.Data.Movie.Cast]? {
         didSet {
             DispatchQueue.main.async {
                 self.castCollectionView.reloadData()
+            }
+        }
+    }
+    
+    var genres: [String]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.genresCollectionView.reloadData()
             }
         }
     }
@@ -188,6 +225,14 @@ extension MovieDetailView: ViewSetupProtocol {
         castCollectionView.dataSource = self
         detailBackgroundView.addSubview(castCollectionView)
         
+        genresTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        detailBackgroundView.addSubview(genresTitleLabel)
+        
+        genresCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        genresCollectionView.delegate = self
+        genresCollectionView.dataSource = self
+        detailBackgroundView.addSubview(genresCollectionView)
+        
     }
     
     func configureConstraints() {
@@ -242,8 +287,8 @@ extension MovieDetailView: ViewSetupProtocol {
         )
         
         directorTitleLabel.anchor(
-            top: self.overviewTextView.bottomAnchor, paddingTop: 20,
-            left: self.overviewTitleLabel.leftAnchor
+            top: self.rateLabel.bottomAnchor, paddingTop: 10,
+            left: self.rateLabel.leftAnchor
         )
         
         directorNameLabel.anchor(
@@ -252,13 +297,25 @@ extension MovieDetailView: ViewSetupProtocol {
         )
         
         castTitleLabel.anchor(
-            top: self.directorNameLabel.bottomAnchor, paddingTop: 10,
-            left: self.directorNameLabel.leftAnchor
+            top: self.overviewTextView.bottomAnchor, paddingTop: 10,
+            left: self.overviewTextView.leftAnchor
         )
         
         castCollectionView.anchor(
             top: castTitleLabel.bottomAnchor, paddingTop: 10,
             left: castTitleLabel.leftAnchor,
+            right: self.rightAnchor, paddingRight: -20,
+            width: UIScreen.main.bounds.width, height: 40
+        )
+        
+        genresTitleLabel.anchor(
+            top: self.castCollectionView.bottomAnchor, paddingTop: 20,
+            left: self.castCollectionView.leftAnchor
+        )
+        
+        genresCollectionView.anchor(
+            top: genresTitleLabel.bottomAnchor, paddingTop: 10,
+            left: genresTitleLabel.leftAnchor,
             right: self.rightAnchor, paddingRight: -20,
             width: UIScreen.main.bounds.width, height: 40
         )
@@ -272,18 +329,11 @@ extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cast?.count ?? 0
+        return setNumberOfItemsInSection(collectionView: collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCollectionViewCell.identifier, for: indexPath) as? CastCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            guard let cast = cast else { return UICollectionViewCell() }
-            cell.layoutIfNeeded()
-            cell.fillCellWith(castName: cast[indexPath.row].name)
-
-            return cell
+        return  setCellForRow(collectionView: collectionView, indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -292,5 +342,35 @@ extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -20)
+    }
+    
+    func setNumberOfItemsInSection(collectionView: UICollectionView) -> Int {
+        if collectionView == castCollectionView {
+            return cast?.count ?? 0
+        } else {
+            return genres?.count ?? 0
+        }
+    }
+    
+    func setCellForRow(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == castCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCollectionViewCell.identifier, for: indexPath) as? CastCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            guard let cast = cast else { return UICollectionViewCell() }
+            cell.layoutIfNeeded()
+            cell.fillCellWith(castName: cast[indexPath.row].name)
+
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCollectionViewCell.identifier, for: indexPath) as? CastCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            guard let genres = genres else { return UICollectionViewCell() }
+            cell.layoutIfNeeded()
+            cell.fillCellWith(castName: genres[indexPath.row])
+
+            return cell
+        }
     }
 }

@@ -31,7 +31,7 @@ class AllContenteViewModel: ObservableObject {
             switch result {
             case .success(let movies):
                 guard let movies = movies.movies else { return }
-                self.moviesByGenre = movies
+                self.moviesByGenre = movies.sorted(by: {$0?.title ?? "" > $1?.title ?? ""})
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }

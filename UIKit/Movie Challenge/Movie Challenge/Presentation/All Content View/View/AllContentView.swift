@@ -72,7 +72,7 @@ extension AllContentView: ViewSetupProtocol {
             top: self.topAnchor,
             bottom: self.bottomAnchor,
             left: self.leftAnchor ,
-            right: self.rightAnchor, paddingRight: -20
+            right: self.rightAnchor
         )
     }
     
@@ -101,9 +101,19 @@ extension AllContentView: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let movieID = allMovies?[indexPath.row]?.id else { return }
+       setSelectedItem(indexPath: indexPath)
+    }
+    
+    func setSelectedItem(indexPath: IndexPath) {
         guard let nav = nav else { return }
-        coordinator?.toDetailScreen(movieID: movieID, nav: nav)
+       
+        if allMovies != nil {
+            guard let movieID = allMovies?[indexPath.row]?.id else { return }
+            coordinator?.toDetailScreen(movieID: movieID, nav: nav)
+        } else {
+            guard let movieID = moviesByGenre?[indexPath.row]?.id else { return }
+            coordinator?.toDetailScreen(movieID: movieID, nav: nav)
+        }
     }
     
     func setCollectionViewCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
@@ -111,6 +121,7 @@ extension AllContentView: UICollectionViewDelegate, UICollectionViewDataSource, 
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            
             guard let allMovies = allMovies else { return UICollectionViewCell() }
             cell.layoutIfNeeded()
             cell.fillCellWith(movie: allMovies[indexPath.row])
@@ -120,6 +131,7 @@ extension AllContentView: UICollectionViewDelegate, UICollectionViewDataSource, 
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesByGenreCollectionViewCell.identifier, for: indexPath) as? MoviesByGenreCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            
             guard let moviesByGenre = moviesByGenre else { return UICollectionViewCell() }
             cell.layoutIfNeeded()
             cell.fillCellWith(movie: moviesByGenre[indexPath.row])

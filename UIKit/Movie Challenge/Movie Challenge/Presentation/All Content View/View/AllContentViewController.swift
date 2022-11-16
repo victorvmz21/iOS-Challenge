@@ -46,12 +46,6 @@ class AllContentViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.tintColor = .systemBlue
     }
-
-    func setUI() {
-        allContentView.allMovies = allMovies
-        allContentView.coordinator = viewModel.coordinator
-        allContentView.nav = navigationController
-    }
     
     func bindViewModel() {
         viewModel.$moviesByGenre.sink { movies in
@@ -68,5 +62,41 @@ class AllContentViewController: UIViewController {
         guard let genre = genre else { return }
         viewModel.fetchMoviesByGenre(genre: genre)
     }
+    
+    func setUI() {
+        self.title = genre == nil ? "All Movies" : genre
+        allContentView.allMovies = allMovies
+        allContentView.coordinator = viewModel.coordinator
+        allContentView.nav = navigationController
+        setNavigationItem()
+    }
+    
+    func setNavigationItem() {
+        let buttonItem = UIBarButtonItem(
+            image: UIImage(systemName: "line.3.horizontal.decrease.circle"),
+            menu: makeContextMenu()
+        )
+        self.navigationItem.rightBarButtonItem = buttonItem
+    }
+    
+    func makeContextMenu() -> UIMenu {
 
+        let filterByName = UIAction(title: "Filter by name", image: nil) { action in
+            if self.genre != nil {
+                self.viewModel.moviesByGenre = self.viewModel.moviesByGenre?.sorted(by: {$0?.title ?? "" > $1?.title ?? ""})
+            } else {
+                self.allContentView.allMovies =  self.allMovies?.sorted(by: {$0?.title ?? "" > $1?.title ?? ""})
+            }
+        }
+        
+        let filterByPopularity = UIAction(title: "Filter by popularity", image: nil) { action in
+            if self.genre != nil {
+                self.viewModel.moviesByGenre = self.viewModel.moviesByGenre?.sorted(by: {$0?.voteAverage ?? 0 > $1?.voteAverage ?? 0})
+            } else {
+                self.allContentView.allMovies =  self.allMovies?.sorted(by: {$0?.voteAverage ?? 0 > $1?.voteAverage ?? 0})
+            }
+        }
+        
+        return UIMenu(options: .singleSelection, children: [filterByName, filterByPopularity])
+    }
 }

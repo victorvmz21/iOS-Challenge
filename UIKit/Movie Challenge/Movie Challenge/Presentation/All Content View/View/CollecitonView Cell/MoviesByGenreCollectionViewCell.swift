@@ -43,16 +43,13 @@ class MoviesByGenreCollectionViewCell: UICollectionViewCell {
 
 extension MoviesByGenreCollectionViewCell: ViewSetupProtocol {
     func configureSubviews() {
-        
         posterImageView.translatesAutoresizingMaskIntoConstraints = false
-        posterImageView.layer.cornerRadius = 6
         contentView.addSubview(posterImageView)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         
         rateLabel.translatesAutoresizingMaskIntoConstraints = false
-        rateLabel.layer.cornerRadius = rateLabel.frame.height / 2
         posterImageView.addSubview(rateLabel)
     }
     

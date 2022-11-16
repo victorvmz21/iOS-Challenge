@@ -94,8 +94,9 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = HeaderView()
+        
         if section == 2 {
+            let view = HeaderView()
             view.layoutIfNeeded()
             view.configureHeader("All Movies", movies: movies, coordinator: coordinator, nav: nav)
             return view

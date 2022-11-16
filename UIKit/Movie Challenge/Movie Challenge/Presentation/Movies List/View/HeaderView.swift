@@ -11,7 +11,7 @@ class HeaderView: UIView {
     
     let headerSectionTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .label
+        label.textColor = .gray
         return label
     }()
     
@@ -57,13 +57,15 @@ extension HeaderView: ViewSetupProtocol {
     }
     
     func configureConstraints() {
+        viewAllButton.anchor(
+            top: headerSectionTitleLabel.topAnchor, paddingTop: -4,
+            right: self.rightAnchor, paddingRight: -20
+        )
+        
         headerSectionTitleLabel.anchor(
             top: self.topAnchor,
             left: self.leftAnchor, paddingLeft: 20
         )
-        
-        viewAllButton.anchor(right: self.rightAnchor, paddingRight: -20)
-        viewAllButton.center(centerX: headerSectionTitleLabel.centerXAnchor)
 
     }
 }
