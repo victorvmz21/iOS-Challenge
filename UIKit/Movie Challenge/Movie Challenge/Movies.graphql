@@ -33,3 +33,8 @@ query GetMoviesByGenres($genre: String) {
   }
 }
 
+fragment Flick on Movie {
+    id, title, voteAverage, posterPath overview, genres
+    cast { name  }
+    director { name }
+}

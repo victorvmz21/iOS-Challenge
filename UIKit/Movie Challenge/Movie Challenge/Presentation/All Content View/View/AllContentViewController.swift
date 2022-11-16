@@ -12,7 +12,7 @@ class AllContentViewController: UIViewController {
     
     var viewModel: AllContenteViewModel
     var genre: String?
-    var allMovies: [GetMoviesQueryQuery.Data.Movie?]?
+    var allMovies: [Movie]?
     private var cancellables: Set<AnyCancellable> = []
     
     var allContentView: AllContentView {
@@ -26,7 +26,7 @@ class AllContentViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,11 +49,9 @@ class AllContentViewController: UIViewController {
     
     func bindViewModel() {
         viewModel.$moviesByGenre.sink { movies in
-            if movies != nil {
-                self.allContentView.moviesByGenre = movies
-                DispatchQueue.main.async {
-                    self.allContentView.collectionView.reloadData()
-                }
+            self.allContentView.moviesByGenre = movies
+            DispatchQueue.main.async {
+                self.allContentView.collectionView.reloadData()
             }
         }.store(in: &cancellables)
     }
@@ -80,23 +78,29 @@ class AllContentViewController: UIViewController {
     }
     
     func makeContextMenu() -> UIMenu {
-
+        
         let filterByName = UIAction(title: "Filter by name", image: nil) { action in
             if self.genre != nil {
-                self.viewModel.moviesByGenre = self.viewModel.moviesByGenre?.sorted(by: {$0?.title ?? "" > $1?.title ?? ""})
+                self.viewModel.moviesByGenre = self.viewModel.moviesByGenre.sorted(by: {$0.title ?? "" > $1.title ?? ""})
             } else {
-                self.allContentView.allMovies =  self.allMovies?.sorted(by: {$0?.title ?? "" > $1?.title ?? ""})
+                self.allContentView.allMovies =  self.allMovies?.sorted(by: {$0.title ?? "" > $1.title ?? ""})
             }
         }
         
         let filterByPopularity = UIAction(title: "Filter by popularity", image: nil) { action in
             if self.genre != nil {
-                self.viewModel.moviesByGenre = self.viewModel.moviesByGenre?.sorted(by: {$0?.voteAverage ?? 0 > $1?.voteAverage ?? 0})
+                self.viewModel.moviesByGenre = self.viewModel.moviesByGenre.sorted(by: {$0.voteAverage ?? 0 > $1.voteAverage ?? 0})
             } else {
-                self.allContentView.allMovies =  self.allMovies?.sorted(by: {$0?.voteAverage ?? 0 > $1?.voteAverage ?? 0})
+                self.allContentView.allMovies =  self.allMovies?.sorted(by: {$0.voteAverage ?? 0 > $1.voteAverage ?? 0})
             }
         }
         
         return UIMenu(options: .singleSelection, children: [filterByName, filterByPopularity])
     }
+    
+//    deinit {
+//        cancellables.forEach { cancellable in
+//            cancellable.cancel()
+//        }
+//    }
 }

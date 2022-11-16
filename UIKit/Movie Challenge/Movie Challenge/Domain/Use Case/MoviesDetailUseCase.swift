@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesDetailUseCaseProtocol {
-    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<MovieDetailQuery.Data, Error>) -> Void)
+    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<Movie?, Error>) -> Void)
 }
 
 class MoviesDetailUseCase: MoviesDetailUseCaseProtocol {
@@ -19,7 +19,7 @@ class MoviesDetailUseCase: MoviesDetailUseCaseProtocol {
         self.repository = repository
     }
     
-    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<MovieDetailQuery.Data, Error>) -> Void) {
+    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<Movie?, Error>) -> Void) {
         repository.fetchMovieDetails(movieID: movieID, completion: completion)
     }
 }

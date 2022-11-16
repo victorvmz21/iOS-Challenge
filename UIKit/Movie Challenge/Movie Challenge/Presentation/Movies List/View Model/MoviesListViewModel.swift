@@ -10,9 +10,8 @@ import Apollo
 
 class MoviesListViewModel: ObservableObject {
     
-    @Published var screenTitle: String = "Movies"
-    @Published var movies: [GetMoviesQueryQuery.Data.Movie?] = []
-    @Published var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?] = []
+    @Published var movies: [Movie] = []
+    @Published var topFiveMovies: [Movie] = []
     @Published var genres: [String] = []
     @Published var isDataAvailable: Bool = false
     @Published var errorMessage: String = ""
@@ -30,8 +29,7 @@ class MoviesListViewModel: ObservableObject {
         movieUseCase.fetchMovies { result in
             switch result {
             case .success(let movies):
-                guard let moviesList = movies.movies else { return }
-                self.movies = moviesList
+                self.movies = movies
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }
@@ -43,8 +41,7 @@ class MoviesListViewModel: ObservableObject {
         movieUseCase.fetchTopFiveMovies { result in
             switch result {
             case .success(let movies):
-                guard let moviesList = movies.movies else { return }
-                self.topFiveMovies = moviesList
+                self.topFiveMovies = movies
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }

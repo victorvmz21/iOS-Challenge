@@ -46,6 +46,7 @@ class MovieListViewController: UIViewController {
     }
     
     func setUI() {
+        self.title = "Movies"
         navigationController?.navigationBar.prefersLargeTitles = true
         movieListView.coordinator = viewModel.coordinator
         movieListView.nav = self.navigationController
@@ -53,10 +54,7 @@ class MovieListViewController: UIViewController {
     }
     
     func bindViewModel() {
-        viewModel.$screenTitle.sink { title in
-            self.title = title
-        }.store(in: &cancellables)
-        
+       
         viewModel.$movies.sink{ movies in
             self.movieListView.movies = movies
         }.store(in: &cancellables)

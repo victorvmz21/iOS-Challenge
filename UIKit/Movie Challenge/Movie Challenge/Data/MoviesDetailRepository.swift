@@ -8,18 +8,19 @@
 import Foundation
 
 protocol MoviesDetailrepositoryProtocol {
-    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<MovieDetailQuery.Data, Error>) -> Void)
+    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<Movie?, Error>) -> Void)
 }
 
 class MoviesDetailRepository: MoviesDetailrepositoryProtocol {
     
-    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<MovieDetailQuery.Data, Error>) -> Void) {
+    func fetchMovieDetails(movieID: Int, completion: @escaping (Result<Movie?, Error>) -> Void) {
         let query = MovieDetailQuery(identifier: movieID)
         Network.shared.apollo.fetch(query: query) { result in
             switch result {
             case .success(let graphQLResult):
-                guard let movieDetail = graphQLResult.data else { return }
-                completion(.success(movieDetail))
+                guard let jsonData = graphQLResult.data?.jsonObject else { return }
+                print("JsonData: \(jsonData)" )
+                completion(.success(convertJsonObjectToMovie(objectData: jsonData)))
             case .failure(let error):
                 completion(.failure(error))
             }

@@ -10,7 +10,7 @@ import UIKit
 class MoviesDetailViewModel: ObservableObject {
     
     @Published var errorMessage: String = ""
-    @Published var movie: MovieDetailQuery.Data.Movie? = nil
+    @Published var movie: Movie?
     
     let coordinator: CoordinatorProtocol
     let moviesDetailUseCase: MoviesDetailUseCaseProtocol
@@ -29,7 +29,10 @@ class MoviesDetailViewModel: ObservableObject {
         moviesDetailUseCase.fetchMovieDetails(movieID: movieID) { result in
             switch result {
             case .success(let data):
-                self.movie = data.movie
+                print("Movie: \(data)")
+                
+                self.movie = data
+                
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }

@@ -154,7 +154,7 @@ class MovieDetailView: UIView {
         return collectionView
     }()
     
-    var cast: [MovieDetailQuery.Data.Movie.Cast]? {
+    var cast: [Cast]? {
         didSet {
             DispatchQueue.main.async {
                 self.castCollectionView.reloadData()
@@ -333,7 +333,7 @@ extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return  setCellForRow(collectionView: collectionView, indexPath: indexPath)
+        return setCellForRow(collectionView: collectionView, indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

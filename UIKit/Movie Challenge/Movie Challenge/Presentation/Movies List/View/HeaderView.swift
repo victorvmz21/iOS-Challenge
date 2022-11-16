@@ -22,7 +22,7 @@ class HeaderView: UIView {
         return button
     }()
     
-    var movies: [GetMoviesQueryQuery.Data.Movie?]?
+    var movies: [Movie]?
     var coordinator: CoordinatorProtocol?
     var nav: UINavigationController?
     
@@ -30,7 +30,7 @@ class HeaderView: UIView {
         setupSubviews()
     }
     
-    func configureHeader(_ headerTitle: String, movies: [GetMoviesQueryQuery.Data.Movie?]?, coordinator: CoordinatorProtocol?, nav: UINavigationController?) {
+    func configureHeader(_ headerTitle: String, movies: [Movie]?, coordinator: CoordinatorProtocol?, nav: UINavigationController?) {
         headerSectionTitleLabel.text = headerTitle
         self.movies = movies
         self.coordinator = coordinator

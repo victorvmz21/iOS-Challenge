@@ -71,10 +71,10 @@ extension MovieCollectionViewCell: ViewSetupProtocol {
         )
     }
     
-    func fillCellWith(movie: GetMoviesQueryQuery.Data.Movie?) {
-        posterImageView.loadImageFrom(url: movie?.posterPath ?? "")
-        titleLabel.text = movie?.title ?? "title not available"
-        rateLabel.text = " \(movie?.voteAverage ?? 0.0) "
+    func fillCellWith(movie: Movie) {
+        posterImageView.loadImageFrom(url: movie.posterPath ?? "")
+        titleLabel.text = movie.title
+        rateLabel.text = " \(movie.voteAverage ?? 0.0) "
         
     }
 }

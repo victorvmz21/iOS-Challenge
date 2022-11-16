@@ -13,11 +13,7 @@ class MovieListView: UIView {
     var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.register(
-            TopFiveMovieCell.self,
-            forCellReuseIdentifier: TopFiveMovieCell.identifier
-        )
-        
+    
         tableView.register(
             MoviesTableViewCell.self,
             forCellReuseIdentifier: MoviesTableViewCell.identifier
@@ -31,10 +27,10 @@ class MovieListView: UIView {
         return tableView
     }()
     
-    var movies: [GetMoviesQueryQuery.Data.Movie?]?
+    var movies: [Movie]?
     var nav: UINavigationController?
     var vc: UIViewController?
-    var topFiveMovies: [TopMoviesQueryQuery.Data.Movie?]?
+    var topFiveMovies: [Movie]?
     var genres: [String]?
     var coordinator: CoordinatorProtocol?
     
@@ -92,9 +88,7 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         if section == 2 {
             let view = HeaderView()
             view.layoutIfNeeded()
@@ -102,7 +96,6 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
             return view
         }
         return nil
-        
     }
     
     func setTableViewViewCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
@@ -112,15 +105,12 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 0 {
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TopFiveMovieCell.identifier, for: indexPath) as? TopFiveMovieCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MoviesTableViewCell.identifier, for: indexPath) as? MoviesTableViewCell else {
                 return UITableViewCell()
             }
-            
             guard let topFiveMovies = topFiveMovies else { return UITableViewCell() }
-           
             cell.layoutIfNeeded()
             cell.setCellWith(values: topFiveMovies, nav, coordinator: coordinator)
-            
             return cell
             
         } else if indexPath.section == 1 {
