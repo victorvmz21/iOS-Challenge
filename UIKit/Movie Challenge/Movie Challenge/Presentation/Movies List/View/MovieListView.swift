@@ -79,13 +79,7 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Top 5 Movies"
-        } else if section == 1 {
-            return "Genres"
-        } else {
-            return ""
-        }
+        return section == 0 ? "Top 5 Movies" : section == 1 ? "Genres" : ""
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

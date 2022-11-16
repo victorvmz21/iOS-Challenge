@@ -9,6 +9,7 @@ import UIKit
 
 class MovieDetailView: UIView {
     
+    //MARK: - UI
     let detailBackgroundView: UIView = {
        let view = UIView()
         view.backgroundColor = .systemBackground
@@ -154,6 +155,7 @@ class MovieDetailView: UIView {
         return collectionView
     }()
     
+    //MARK: - Properties
     var cast: [Cast]? {
         didSet {
             DispatchQueue.main.async {
@@ -170,6 +172,7 @@ class MovieDetailView: UIView {
         }
     }
     
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
@@ -180,7 +183,7 @@ class MovieDetailView: UIView {
     }
     
 }
-
+//MARK: - UI Configuration
 extension MovieDetailView: ViewSetupProtocol {
     func configureSubviews() {
         
@@ -323,6 +326,7 @@ extension MovieDetailView: ViewSetupProtocol {
     }
 }
 
+//MARK: - CollectionView Delegate & DataSource
 extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -333,7 +337,7 @@ extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return setCellForRow(collectionView: collectionView, indexPath: indexPath)
+        return  setCellForRow(collectionView: collectionView, indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -345,11 +349,7 @@ extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func setNumberOfItemsInSection(collectionView: UICollectionView) -> Int {
-        if collectionView == castCollectionView {
-            return cast?.count ?? 0
-        } else {
-            return genres?.count ?? 0
-        }
+        return collectionView == castCollectionView ? cast?.count ?? 0 : genres?.count ?? 0
     }
     
     func setCellForRow(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
@@ -359,7 +359,7 @@ extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource,
             }
             guard let cast = cast else { return UICollectionViewCell() }
             cell.layoutIfNeeded()
-            cell.fillCellWith(castName: cast[indexPath.row].name)
+            cell.fillCellWith(text: cast[indexPath.row].name)
 
             return cell
         } else {
@@ -368,7 +368,7 @@ extension MovieDetailView: UICollectionViewDelegate, UICollectionViewDataSource,
             }
             guard let genres = genres else { return UICollectionViewCell() }
             cell.layoutIfNeeded()
-            cell.fillCellWith(castName: genres[indexPath.row])
+            cell.fillCellWith(text: genres[indexPath.row])
 
             return cell
         }

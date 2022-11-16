@@ -38,8 +38,8 @@ class MovieListViewController: UIViewController {
         setUI()
         viewModel.getAllData()
         bindViewModel()
-        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.tintColor = .systemBlue
@@ -54,7 +54,7 @@ class MovieListViewController: UIViewController {
     }
     
     func bindViewModel() {
-       
+        
         viewModel.$movies.sink{ movies in
             self.movieListView.movies = movies
         }.store(in: &cancellables)
@@ -72,6 +72,12 @@ class MovieListViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.movieListView.tableView.reloadData()
                 }
+            }
+        }.store(in: &cancellables)
+        
+        viewModel.$errorMessage.sink { message in
+            if let message = message {
+                self.displayErrorAlert(message: message)
             }
         }.store(in: &cancellables)
     }

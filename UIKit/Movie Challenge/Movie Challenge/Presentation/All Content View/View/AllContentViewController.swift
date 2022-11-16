@@ -98,9 +98,9 @@ class AllContentViewController: UIViewController {
         return UIMenu(options: .singleSelection, children: [filterByName, filterByPopularity])
     }
     
-//    deinit {
-//        cancellables.forEach { cancellable in
-//            cancellable.cancel()
-//        }
-//    }
+    deinit {
+        cancellables.forEach { cancellable in
+            cancellable.cancel()
+        }
+    }
 }

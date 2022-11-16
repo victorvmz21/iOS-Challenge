@@ -14,7 +14,7 @@ class MoviesListViewModel: ObservableObject {
     @Published var topFiveMovies: [Movie] = []
     @Published var genres: [String] = []
     @Published var isDataAvailable: Bool = false
-    @Published var errorMessage: String = ""
+    @Published var errorMessage: String? = nil
     
     let movieUseCase: MoviesUseCaseProtocol
     let coordinator: CoordinatorProtocol

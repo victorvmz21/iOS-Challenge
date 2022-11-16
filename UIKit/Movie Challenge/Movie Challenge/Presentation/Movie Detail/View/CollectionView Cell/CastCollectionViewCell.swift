@@ -41,7 +41,7 @@ extension CastCollectionViewCell: ViewSetupProtocol {
         )
     }
     
-    func fillCellWith(castName: String) {
-        self.castNameLabel.text = castName
+    func fillCellWith(text: String) {
+        self.castNameLabel.text = text
     }
 }

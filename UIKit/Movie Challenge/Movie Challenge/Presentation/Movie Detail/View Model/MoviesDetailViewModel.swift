@@ -29,10 +29,7 @@ class MoviesDetailViewModel: ObservableObject {
         moviesDetailUseCase.fetchMovieDetails(movieID: movieID) { result in
             switch result {
             case .success(let data):
-                print("Movie: \(data)")
-                
                 self.movie = data
-                
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }

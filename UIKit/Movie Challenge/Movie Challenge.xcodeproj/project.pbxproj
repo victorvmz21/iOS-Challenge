@@ -50,6 +50,7 @@
 		5213C73229237A93006F119F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C73129237A93006F119F /* HeaderView.swift */; };
 		5213C73529238FB4006F119F /* AllContenteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C73429238FB4006F119F /* AllContenteViewModel.swift */; };
 		5213C73A29247B7E006F119F /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C73929247B7E006F119F /* JsonHelper.swift */; };
+		5213C73D2924C084006F119F /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213C73C2924C084006F119F /* UIViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		5213C73129237A93006F119F /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5213C73429238FB4006F119F /* AllContenteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContenteViewModel.swift; sourceTree = "<group>"; };
 		5213C73929247B7E006F119F /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
+		5213C73C2924C084006F119F /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,8 +212,7 @@
 		5213C6D9291FACD6006F119F /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				5213C6F12920A0F2006F119F /* MoviesRepository.swift */,
-				5213C7212923493C006F119F /* MoviesDetailRepository.swift */,
+				5213C73B2924C04D006F119F /* Repositories */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -235,6 +236,7 @@
 				5213C7002920D9C4006F119F /* UIImageViewExtension.swift */,
 				5213C70A292206DF006F119F /* UITableViewExtension.swift */,
 				5213C73929247B7E006F119F /* JsonHelper.swift */,
+				5213C73C2924C084006F119F /* UIViewControllerExtension.swift */,
 			);
 			path = "Helper & Extension";
 			sourceTree = "<group>";
@@ -384,6 +386,15 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
+		5213C73B2924C04D006F119F /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				5213C6F12920A0F2006F119F /* MoviesRepository.swift */,
+				5213C7212923493C006F119F /* MoviesDetailRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -519,6 +530,7 @@
 				5213C73529238FB4006F119F /* AllContenteViewModel.swift in Sources */,
 				5213C72429234AF7006F119F /* MoviesDetailUseCase.swift in Sources */,
 				5213C70D29222913006F119F /* MoviesTableViewCell.swift in Sources */,
+				5213C73D2924C084006F119F /* UIViewControllerExtension.swift in Sources */,
 				5213C7222923493C006F119F /* MoviesDetailRepository.swift in Sources */,
 				5213C6F52920A5A6006F119F /* MoviesUseCase.swift in Sources */,
 				5213C6DE2920974F006F119F /* MovieListView.swift in Sources */,

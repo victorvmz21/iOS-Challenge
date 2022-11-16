@@ -10,6 +10,7 @@ import Combine
 
 class MovieDetailViewController: UIViewController {
     
+    var movieID: Int?
     var viewModel: MoviesDetailViewModel
     private var cancellables: Set<AnyCancellable> = []
     
@@ -19,7 +20,6 @@ class MovieDetailViewController: UIViewController {
         }
         return unwrappedView
     }
-    var movieID: Int?
     
     init(viewModel: MoviesDetailViewModel) {
         self.viewModel = viewModel
@@ -51,7 +51,6 @@ class MovieDetailViewController: UIViewController {
     
     func bindViewModel() {
         viewModel.$movie.sink { movie in
-            print("Movie title: \(movie?.title)")
             DispatchQueue.main.async {
                 self.movieDetailView.titleLabel.text = movie?.title
                 self.movieDetailView.thumbImageView.loadImageFrom(url: movie?.posterPath ?? "")
@@ -70,10 +69,10 @@ class MovieDetailViewController: UIViewController {
         viewModel.fetchMovieDetails(movieID: movieID)
     }
     
-//    deinit {
-//        cancellables.forEach { cancellable in
-//            cancellable.cancel()
-//        }
-//    }
+    deinit {
+        cancellables.forEach { cancellable in
+            cancellable.cancel()
+        }
+    }
 
 }

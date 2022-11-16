@@ -19,7 +19,6 @@ class MoviesDetailRepository: MoviesDetailrepositoryProtocol {
             switch result {
             case .success(let graphQLResult):
                 guard let jsonData = graphQLResult.data?.jsonObject else { return }
-                print("JsonData: \(jsonData)" )
                 completion(.success(convertJsonObjectToMovie(objectData: jsonData)))
             case .failure(let error):
                 completion(.failure(error))
