@@ -13,7 +13,7 @@ class MoviesListViewModel: ObservableObject {
     @Published var movies: [Movie] = []
     @Published var topFiveMovies: [Movie] = []
     @Published var genres: [String] = []
-    @Published var isDataAvailable: Bool = false
+    @Published var didFinishLoading: Bool = false
     @Published var errorMessage: String? = nil
     
     var defaultMovies: [Movie] = []
@@ -69,18 +69,31 @@ class MoviesListViewModel: ObservableObject {
     }
     
     func getAllData() {
+        let group = DispatchGroup()
+        
+        group.enter()
         fetchTopFiveMovies { isFinished in
             if isFinished {
-                self.fetchGenres { isFinished in
-                    if isFinished {
-                        self.fetchMovies { isFinished in
-                            if isFinished {
-                                self.isDataAvailable = true
-                            }
-                        }
-                    }
-                }
+                group.leave()
             }
+        }
+        
+        group.enter()
+        fetchGenres { isFinished in
+            if isFinished {
+                group.leave()
+            }
+        }
+        
+        group.enter()
+        fetchMovies { isFinished in
+            if isFinished {
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: DispatchQueue.global()) {
+            self.didFinishLoading = true
         }
         
     }

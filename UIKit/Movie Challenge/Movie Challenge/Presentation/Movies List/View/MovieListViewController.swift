@@ -51,6 +51,7 @@ class MovieListViewController: UIViewController {
     
     func setUI() {
         self.title = "Movies"
+        self.startLoadingAnimation()
         navigationController?.navigationBar.prefersLargeTitles = true
         movieListView.coordinator = viewModel.coordinator
         movieListView.nav = self.navigationController
@@ -82,9 +83,10 @@ class MovieListViewController: UIViewController {
             }
         }.store(in: &cancellables)
         
-        viewModel.$isDataAvailable.sink { isDataAvailable in
+        viewModel.$didFinishLoading.sink { isDataAvailable in
             if isDataAvailable {
                 DispatchQueue.main.async {
+                    self.stopLoadingAnimation()
                     self.movieListView.tableView.reloadData()
                 }
             }

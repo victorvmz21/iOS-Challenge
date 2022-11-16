@@ -10,6 +10,7 @@ import UIKit
 class MoviesDetailViewModel: ObservableObject {
     
     @Published var errorMessage: String? = nil
+    @Published var didFinishLoading: Bool = false
     @Published var movie: Movie?
     
     let coordinator: CoordinatorProtocol
@@ -33,6 +34,7 @@ class MoviesDetailViewModel: ObservableObject {
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }
+            self.didFinishLoading = true
         }
     }
     

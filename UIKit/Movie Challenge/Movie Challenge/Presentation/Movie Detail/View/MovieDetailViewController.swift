@@ -42,11 +42,11 @@ class MovieDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUI()
+        self.navigationController?.navigationBar.tintColor = .white
     }
     
     func setUI() {
-        self.navigationController?.navigationBar.tintColor = .white
+        self.startLoadingAnimation()
     }
     
     func bindViewModel() {
@@ -60,6 +60,14 @@ class MovieDetailViewController: UIViewController {
                 self.movieDetailView.overviewTextView.text = movie?.overview
                 self.movieDetailView.cast = movie?.cast
                 self.movieDetailView.genres = movie?.genres
+            }
+        }.store(in: &cancellables)
+        
+        viewModel.$didFinishLoading.sink { isDataAvailable in
+            if isDataAvailable {
+                DispatchQueue.main.async {
+                    self.stopLoadingAnimation()
+                }
             }
         }.store(in: &cancellables)
         
