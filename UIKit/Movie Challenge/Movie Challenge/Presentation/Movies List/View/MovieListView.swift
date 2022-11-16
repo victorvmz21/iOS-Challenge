@@ -27,11 +27,18 @@ class MovieListView: UIView {
         return tableView
     }()
     
+    let searchBar: UISearchBar = {
+       let searchBar = UISearchBar()
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = "Search here..."
+       return searchBar
+    }()
+    
     var movies: [Movie]?
-    var nav: UINavigationController?
-    var vc: UIViewController?
     var topFiveMovies: [Movie]?
     var genres: [String]?
+    var nav: UINavigationController?
+    var vc: UIViewController?
     var coordinator: CoordinatorProtocol?
     
     override init(frame: CGRect) {
@@ -46,6 +53,9 @@ class MovieListView: UIView {
 
 extension MovieListView: ViewSetupProtocol {
     func configureSubviews() {
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(searchBar)
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -53,8 +63,15 @@ extension MovieListView: ViewSetupProtocol {
     }
     
     func configureConstraints() {
+        searchBar.anchor(
+            top: self.safeAreaLayoutGuide.topAnchor,
+            left: self.leftAnchor, paddingLeft: 20,
+            right: self.rightAnchor, paddingRight: -20,
+            height: 60
+        )
+        
         tableView.anchor(
-            top: self.topAnchor,
+            top: searchBar.topAnchor, paddingTop: 60,
             bottom: self.bottomAnchor,
             left: self.leftAnchor,
             right: self.rightAnchor

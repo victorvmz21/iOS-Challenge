@@ -62,6 +62,12 @@ class MovieDetailViewController: UIViewController {
                 self.movieDetailView.genres = movie?.genres
             }
         }.store(in: &cancellables)
+        
+        viewModel.$errorMessage.sink { message in
+            if let message = message {
+                self.displayErrorAlert(message: message)
+            }
+        }.store(in: &cancellables)
     }
     
     func getData() {

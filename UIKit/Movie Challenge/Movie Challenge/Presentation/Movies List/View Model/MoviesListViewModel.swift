@@ -16,6 +16,10 @@ class MoviesListViewModel: ObservableObject {
     @Published var isDataAvailable: Bool = false
     @Published var errorMessage: String? = nil
     
+    var defaultMovies: [Movie] = []
+    var defaultTopFiveMovies: [Movie] = []
+    var defaultGenres: [String] = []
+    
     let movieUseCase: MoviesUseCaseProtocol
     let coordinator: CoordinatorProtocol
     
@@ -30,6 +34,7 @@ class MoviesListViewModel: ObservableObject {
             switch result {
             case .success(let movies):
                 self.movies = movies
+                self.defaultMovies = movies
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }
@@ -42,6 +47,7 @@ class MoviesListViewModel: ObservableObject {
             switch result {
             case .success(let movies):
                 self.topFiveMovies = movies
+                self.defaultTopFiveMovies = movies
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }
@@ -54,6 +60,7 @@ class MoviesListViewModel: ObservableObject {
             switch result {
             case .success(let genres):
                 self.genres = genres.genres
+                self.defaultGenres = genres.genres
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }
@@ -76,5 +83,18 @@ class MoviesListViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    func filterLists(searchTerm: String, shouldReset: Bool) {
+        
+        if shouldReset {
+            self.movies = self.defaultMovies
+            self.genres = self.defaultGenres
+            self.topFiveMovies = self.defaultTopFiveMovies
+        } else {
+            self.movies =  self.movies.filter { $0.title!.contains(searchTerm) }
+            self.genres = self.genres.filter { $0.contains(searchTerm) }
+            self.topFiveMovies =  self.topFiveMovies.filter { $0.title!.contains(searchTerm) }
+        }
     }
 }

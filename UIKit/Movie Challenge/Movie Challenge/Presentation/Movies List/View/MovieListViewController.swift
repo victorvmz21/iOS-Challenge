@@ -45,26 +45,41 @@ class MovieListViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .systemBlue
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func setUI() {
         self.title = "Movies"
         navigationController?.navigationBar.prefersLargeTitles = true
         movieListView.coordinator = viewModel.coordinator
         movieListView.nav = self.navigationController
         movieListView.vc = self
+        movieListView.searchBar.delegate = self
+        resetSearch()
     }
     
     func bindViewModel() {
         
         viewModel.$movies.sink{ movies in
             self.movieListView.movies = movies
+            DispatchQueue.main.async {
+                self.movieListView.tableView.reloadData()
+            }
         }.store(in: &cancellables)
         
         viewModel.$topFiveMovies.sink { movies in
             self.movieListView.topFiveMovies = movies
+            DispatchQueue.main.async {
+                self.movieListView.tableView.reloadData()
+            }
         }.store(in: &cancellables)
         
         viewModel.$genres.sink { genres in
             self.movieListView.genres = genres
+            DispatchQueue.main.async {
+                self.movieListView.tableView.reloadData()
+            }
         }.store(in: &cancellables)
         
         viewModel.$isDataAvailable.sink { isDataAvailable in
@@ -82,10 +97,31 @@ class MovieListViewController: UIViewController {
         }.store(in: &cancellables)
     }
     
+    func resetSearch() {
+        if let searchTextField = self.movieListView.searchBar.value(forKey: "searchField") as? UITextField ,
+           let clearButton = searchTextField.value(forKey: "_clearButton") as? UIButton {
+            clearButton.addTarget(self, action: #selector(resetSearchText), for: .touchUpInside)
+        }
+    }
+    
+    @objc func resetSearchText() {
+        self.movieListView.searchBar.text = ""
+        viewModel.filterLists(searchTerm: "", shouldReset: true)
+        self.movieListView.tableView.reloadData()
+        self.view.endEditing(true)
+    }
+    
     deinit {
         cancellables.forEach { cancellable in
             cancellable.cancel()
         }
     }
     
+}
+extension MovieListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        viewModel.filterLists(searchTerm: searchTerm, shouldReset: false)
+        self.view.endEditing(true)
+    }
 }

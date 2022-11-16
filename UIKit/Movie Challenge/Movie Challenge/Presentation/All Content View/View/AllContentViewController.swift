@@ -54,6 +54,12 @@ class AllContentViewController: UIViewController {
                 self.allContentView.collectionView.reloadData()
             }
         }.store(in: &cancellables)
+        
+        viewModel.$errorMessage.sink { message in
+            if let message = message {
+                self.displayErrorAlert(message: message)
+            }
+        }.store(in: &cancellables)
     }
     
     func getData() {

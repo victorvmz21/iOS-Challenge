@@ -10,7 +10,7 @@ import UIKit
 class AllContenteViewModel: ObservableObject {
     
     @Published var moviesByGenre: [Movie] = []
-    @Published var errorMessage: String = ""
+    @Published var errorMessage: String? = nil
     
     let coordinator: CoordinatorProtocol
     let movieUseCase: MoviesUseCaseProtocol

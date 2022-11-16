@@ -9,7 +9,7 @@ import UIKit
 
 class MoviesDetailViewModel: ObservableObject {
     
-    @Published var errorMessage: String = ""
+    @Published var errorMessage: String? = nil
     @Published var movie: Movie?
     
     let coordinator: CoordinatorProtocol
